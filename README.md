@@ -14,15 +14,7 @@ Achim Schuiki\
 Julian Holzegger\
 Maximilian Fazeli\
 Florian Haid\
-<<<<<<< HEAD
-<<<<<<< HEAD
 David Andrews
-=======
-David Andrews\
->>>>>>> d9c91dd... NOTE-000 fix readme markup
-=======
-David Andrews
->>>>>>> 70cc960... NOTE-000 deleted useless break
 
 # Note-App
 
