@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.note.FirstFragment"
+        android:name="com.example.note.fragments.NoteOverviewFragment"
         android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
+        tools:layout="@layout/overview_fragment">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            android:id="@+id/action_overview_to_detail_fragment"
             app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.note.SecondFragment"
+        android:name="com.example.note.fragments.NoteDetailFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
