@@ -1,41 +1,53 @@
 package com.example.note.model;
 
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 
+@Entity
 public class Note {
-    private Integer id;
+    @PrimaryKey
+    private int id;
     private String title;
     private String content;
-    private Timestamp creationTimestamp;
-    private Timestamp lastModification;
+    private Long creationTimestamp;
+    private Long lastModification;
 
     public Note(int id) {
         this.id = id;
         this.title = "";
         this.content = "";
-        this.creationTimestamp = new Timestamp(System.currentTimeMillis());
+        this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
     }
 
+    @Ignore
     public Note(int id, String title) {
         this.id = id;
         this.title = title;
         this.content = "";
-        this.creationTimestamp = new Timestamp(System.currentTimeMillis());
+        this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
     }
 
+    @Ignore
     public Note(int id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.creationTimestamp = new Timestamp(System.currentTimeMillis());
+        this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -54,15 +66,19 @@ public class Note {
         this.content = content;
     }
 
-    public Timestamp getCreationTimestamp() {
+    public Long getCreationTimestamp() {
         return creationTimestamp;
     }
 
-    public Timestamp getLastModification() {
+    public void setCreationTimestamp(Long creationTimestamp) {
+        this.creationTimestamp = creationTimestamp;
+    }
+
+    public Long getLastModification() {
         return lastModification;
     }
 
-    public void setLastModification(Timestamp lastModification) {
+    public void setLastModification(Long lastModification) {
         this.lastModification = lastModification;
     }
 
