@@ -1,22 +1,13 @@
 package com.example.note;
 
-import android.os.Handler;
-import android.util.Log;
-
 import com.example.note.controller.NoteManager;
 import com.example.note.model.Note;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Timestamp;
-import java.time.Clock;
-import java.util.Date;
-
-import static org.junit.Assert.*;
-
 public class NoteManagerUnitTest {
+
     @After
     public void resetNoteList() {
         NoteManager noteManager = NoteManager.getInstance();
@@ -64,7 +55,7 @@ public class NoteManagerUnitTest {
         }
         noteManager.getNodeById(id).setContent(changedContent);
         noteManager.getNodeById(id).setTitle(changedTitle);
-        noteManager.getNodeById(id).setLastModification(new Timestamp(System.currentTimeMillis()));
+        noteManager.getNodeById(id).setLastModification(System.currentTimeMillis());
         assert(noteManager.getNodeById(id).getContent().equals(changedContent));
         assert(noteManager.getNodeById(id).getTitle().equals(changedTitle));
         assert(noteManager.getNodeById(id).getLastModification().compareTo(noteManager.getNodeById(id).getCreationTimestamp()) > 0);
