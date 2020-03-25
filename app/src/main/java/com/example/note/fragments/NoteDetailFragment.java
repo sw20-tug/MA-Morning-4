@@ -19,7 +19,6 @@ public class NoteDetailFragment extends Fragment {
     private TextView nNoteTitle;
     private TextView nNoteDescription;
     private NoteManager nNoteManager;
-    private Note nNote;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,21 +61,5 @@ public class NoteDetailFragment extends Fragment {
         });
 
         return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        if(nNoteTitle != null && nNoteDescription != null && nNoteManager != null && nNote != null) {
-            String newTitle = nNoteTitle.getText().toString();
-            String newContent = nNoteDescription.getText().toString();
-
-            if(!nNote.getTitle().equals(newTitle) || !nNote.getContent().equals(newContent))
-                nNote.setLastModification(System.currentTimeMillis());
-
-            nNote.setTitle(newTitle);
-            nNote.setContent(newContent);
-        }
     }
 }

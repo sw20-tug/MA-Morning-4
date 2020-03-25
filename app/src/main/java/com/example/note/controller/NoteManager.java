@@ -57,6 +57,7 @@ public class NoteManager {
     }
 
     public void updateNote(Note note) {
+        note.setLastModification(System.currentTimeMillis());
         new UpdateNotesTask().execute(note);
     }
 
