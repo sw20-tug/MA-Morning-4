@@ -79,17 +79,10 @@ public class NoteOverviewFragment extends Fragment {
         new_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //for Future implementation of NOTE_002C Add new note
-                /*Bundle bundle = new Bundle();
+                Bundle bundle = new Bundle();
                 bundle.putInt("note_id", -1);
                 NavHostFragment.findNavController(NoteOverviewFragment.this)
-                        .navigate(R.id.action_overview_to_detail_fragment, bundle);*/
-
-                //only for testing
-                Note note = new Note(mNoteManager.getNextFreeId(), "Titel", "Content");
-                mNoteManager.addNote(note);
-                mAllNotes = mNoteManager.getNotes();
-                mAdapter.notifyDataSetChanged();
+                        .navigate(R.id.action_overview_to_detail_fragment, bundle);
             }
         });
 

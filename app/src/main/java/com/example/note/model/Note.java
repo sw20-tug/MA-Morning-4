@@ -4,9 +4,6 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-
 @Entity
 public class Note {
     @PrimaryKey
@@ -20,6 +17,14 @@ public class Note {
         this.id = id;
         this.title = "";
         this.content = "";
+        this.creationTimestamp = System.currentTimeMillis();
+        this.lastModification = this.creationTimestamp;
+    }
+
+    @Ignore
+    public Note(String title, String content) {
+        this.title = title;
+        this.content = content;
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
     }
