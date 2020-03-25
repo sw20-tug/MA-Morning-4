@@ -29,16 +29,16 @@ public class NoteOverviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.overview_fragment, container, false);
-        Context mContext = inflater.getContext();
+        Context context = inflater.getContext();
 
         mNoteManager = NoteManager.getInstance();
         mAllNotes = mNoteManager.getNotes();
 
-        ListView mListView = view.findViewById(R.id.overview_list);
-        mAdapter = new NoteOverviewAdapter(mContext, R.layout.overview_list_item, mAllNotes);
-        mListView.setAdapter(mAdapter);
+        ListView listView = view.findViewById(R.id.overview_list);
+        mAdapter = new NoteOverviewAdapter(context, R.layout.overview_list_item, mAllNotes);
+        listView.setAdapter(mAdapter);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Bundle bundle = new Bundle();
@@ -52,17 +52,17 @@ public class NoteOverviewFragment extends Fragment {
         new_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //for Future implementation of NOTE_002A Add new note
-                Bundle bundle = new Bundle();
+                //for Future implementation of NOTE_002C Add new note
+                /*Bundle bundle = new Bundle();
                 bundle.putInt("note_id", -1);
                 NavHostFragment.findNavController(NoteOverviewFragment.this)
-                        .navigate(R.id.action_overview_to_detail_fragment, bundle);
+                        .navigate(R.id.action_overview_to_detail_fragment, bundle);*/
 
                 //only for testing
-//                Note note = new Note(mNoteManager.getNextFreeId(), "Titel", "Content");
-//                mNoteManager.addNote(note);
-//                mAllNotes = mNoteManager.getNotes();
-//                mAdapter.notifyDataSetChanged();
+                Note note = new Note(mNoteManager.getNextFreeId(), "Titel", "Content");
+                mNoteManager.addNote(note);
+                mAllNotes = mNoteManager.getNotes();
+                mAdapter.notifyDataSetChanged();
             }
         });
 
