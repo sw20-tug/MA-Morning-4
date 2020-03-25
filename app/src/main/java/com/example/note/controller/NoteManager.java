@@ -1,11 +1,9 @@
 package com.example.note.controller;
 
-import androidx.room.Room;
-
-import com.example.note.MainActivity;
-import com.example.note.dao.NoteDAO;
-import com.example.note.db.AppDatabase;
-import com.example.note.db.DatabaseHelper;
+import com.example.note.db.DeleteNotesTask;
+import com.example.note.db.GetNotesTask;
+import com.example.note.db.InsertNotesTask;
+import com.example.note.db.UpdateNotesTask;
 import com.example.note.model.Note;
 
 import java.util.ArrayList;
@@ -27,16 +25,18 @@ public class NoteManager {
         return instance;
     }
 
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
     public List<Note> getNotes() {
         return notes;
     }
 
-    public void addNote(Note note) {
+    public void addNote(String title, String description) {
+        final Note note = new Note(getNextFreeId(), title, description);
         notes.add(note);
-    }
-
-    public void deleteNote(Note note) {
-        notes.remove(note);
+        new InsertNotesTask().execute(note);
     }
 
     public Note getNodeById(int id) {
@@ -54,6 +54,15 @@ public class NoteManager {
                 return id;
             id++;
         }
+    }
+
+    public void updateNote(Note note) {
+        new UpdateNotesTask().execute(note);
+    }
+
+    public void deleteNote(Note note) {
+        notes.remove(note);
+        new DeleteNotesTask().execute(note);
     }
 
     public void importNotes() {}
