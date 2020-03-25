@@ -1,5 +1,11 @@
 package com.example.note.controller;
 
+import androidx.room.Room;
+
+import com.example.note.MainActivity;
+import com.example.note.dao.NoteDAO;
+import com.example.note.db.AppDatabase;
+import com.example.note.db.DatabaseHelper;
 import com.example.note.model.Note;
 
 import java.util.ArrayList;
@@ -7,8 +13,9 @@ import java.util.List;
 
 public class NoteManager {
     private static NoteManager instance = null;
+
     private NoteManager() {
-        this.notes = new ArrayList<>();
+        notes = new ArrayList<>();
     };
 
     private List<Note> notes;
