@@ -14,12 +14,20 @@ import com.example.note.model.Note;
 
 public class NoteDetailFragment extends Fragment {
 
+    private TextView nNoteTitle;
+    private TextView nNoteDescription;
+    private NoteManager nNoteManager;
+    private Note nNote;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.detail_fragment, container, false);
 
-        NoteManager note_manager = NoteManager.getInstance();
+        nNoteTitle = view.findViewById(R.id.detail_note_title);
+        nNoteDescription = view.findViewById(R.id.detail_note_description);
+
+        nNoteManager = NoteManager.getInstance();
 
         if(getArguments() == null)
             return view;
@@ -29,17 +37,30 @@ public class NoteDetailFragment extends Fragment {
         if (note_id == -1)
             return view;
 
-        Note note = note_manager.getNodeById(note_id);
+        nNote = nNoteManager.getNodeById(note_id);
 
-        if (note == null)
+        if (nNote == null)
             return view;
 
-        TextView note_title = view.findViewById(R.id.detail_note_title);
-        TextView note_description = view.findViewById(R.id.detail_note_description);
-
-        note_title.setText(note.getTitle());
-        note_description.setText(note.getContent());
+        nNoteTitle.setText(nNote.getTitle());
+        nNoteDescription.setText(nNote.getContent());
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if(nNoteTitle != null && nNoteDescription != null && nNoteManager != null && nNote != null) {
+            String newTitle = nNoteTitle.getText().toString();
+            String newContent = nNoteDescription.getText().toString();
+
+            if(!nNote.getTitle().equals(newTitle) || !nNote.getContent().equals(newContent))
+                nNote.setLastModification(System.currentTimeMillis());
+
+            nNote.setTitle(newTitle);
+            nNote.setContent(newContent);
+        }
     }
 }
