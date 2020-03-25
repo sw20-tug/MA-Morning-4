@@ -1,6 +1,8 @@
 package com.example.note.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ListView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.note.MainActivity;
 import com.example.note.adapter.NoteOverviewAdapter;
 import com.example.note.R;
 import com.example.note.controller.NoteManager;
@@ -45,6 +48,30 @@ public class NoteOverviewFragment extends Fragment {
                 bundle.putInt("note_id", mAllNotes.get(i).getId());
                 NavHostFragment.findNavController(NoteOverviewFragment.this)
                         .navigate(R.id.action_overview_to_detail_fragment, bundle);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Bundle bundle = new Bundle();
+                final Note note = mAllNotes.get(i);
+                bundle.putInt("note_id", note.getId());
+                new AlertDialog.Builder(NoteOverviewFragment.super.getContext())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Delete Note")
+                        .setMessage("Are you sure you want to delete note " +note.getTitle() + " ?")
+                        .setNegativeButton("No", null)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mNoteManager.deleteNote(note);
+                                mAllNotes.remove(note);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .show();
+                return true;
             }
         });
 
