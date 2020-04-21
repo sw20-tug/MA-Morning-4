@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,7 +18,6 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.note.R;
 import com.example.note.controller.NoteManager;
-import com.example.note.fragments.NoteOverviewFragment;
 import com.example.note.model.Note;
 
 import java.text.SimpleDateFormat;
@@ -48,12 +46,14 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> {
         View rowView = inflater.inflate(R.layout.overview_list_item, null);
         TextView note_title = rowView.findViewById(R.id.overview_note_title);
         TextView note_description = rowView.findViewById(R.id.overview_note_description);
+        TextView note_tag = rowView.findViewById(R.id.overview_note_tag);
         TextView note_timestamp = rowView.findViewById(R.id.overview_note_timestamp);
 
         final Note note = mAllNotes.get(position);
 
         note_title.setText(note.getTitle());
         note_description.setText(note.getContent());
+        note_tag.setText(note.getTag());
         note_timestamp.setText(TIME_FORMATTER.format(note.getLastModification()));
 
         ImageButton moreButton = rowView.findViewById(R.id.overview_item_more_btn);
