@@ -12,6 +12,7 @@ public class Note {
     private String content;
     private Long creationTimestamp;
     private Long lastModification;
+    private boolean pinned;
 
     public Note(int id) {
         this.id = id;
@@ -19,6 +20,7 @@ public class Note {
         this.content = "";
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
     }
 
     @Ignore
@@ -27,6 +29,7 @@ public class Note {
         this.content = content;
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
     }
 
     @Ignore
@@ -36,6 +39,7 @@ public class Note {
         this.content = "";
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
     }
 
     @Ignore
@@ -45,6 +49,15 @@ public class Note {
         this.content = content;
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
+    }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
     }
 
     public int getId() {
