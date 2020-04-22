@@ -68,6 +68,34 @@
             android:textColor="@color/grey"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tag"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dip"
+            android:layout_marginBottom="5dip"
+            android:layout_marginTop="1dip"
+            android:background="@color/light_grey" />
+
+        <EditText
+            android:id="@+id/detail_note_tag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dip"
+            android:layout_marginBottom="5dip"
+            android:background="@color/light_grey"
+            android:hint="@string/tag"
+            android:inputType="textMultiLine"
+            android:padding="20dip"
+            android:scrollHorizontally="false"
+            android:textColor="@color/grey"
+            android:textSize="16sp" />
+
         <Button
             android:id="@+id/save_note_btn"
             android:layout_width="match_parent"
