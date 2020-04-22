@@ -1,7 +1,6 @@
 package com.example.note.controller;
 
 import com.example.note.db.DeleteNotesTask;
-import com.example.note.db.GetNotesTask;
 import com.example.note.db.InsertNotesTask;
 import com.example.note.db.UpdateNotesTask;
 import com.example.note.model.Note;
@@ -33,13 +32,13 @@ public class NoteManager {
         return notes;
     }
 
-    public void addNote(String title, String description) {
-        final Note note = new Note(getNextFreeId(), title, description);
+    public void addNote(String title, String description, String tag) {
+        final Note note = new Note(getNextFreeId(), title, description, tag);
         notes.add(note);
         new InsertNotesTask().execute(note);
     }
 
-    public Note getNodeById(int id) {
+    public Note getNoteById(int id) {
       for(Note note : notes) {
           if(note.getId() == id)
             return note;
@@ -50,7 +49,7 @@ public class NoteManager {
     public Integer getNextFreeId() {
         int id = 1;
         while(true) {
-            if(getNodeById(id) == null)
+            if(getNoteById(id) == null)
                 return id;
             id++;
         }
@@ -69,13 +68,6 @@ public class NoteManager {
     public void importNotes() {}
 
     public void exportNotes() {}
-
-    // TODO: Future Sprints
-    public void addTag(int tagId) {}
-
-    public void editTag(int tagId) {}
-
-    public void removeTag(int tagId) {}
 
     public void shareNote(int noteId) {}
 

@@ -10,23 +10,39 @@ public class Note {
     private int id;
     private String title;
     private String content;
+    private String tag;
     private Long creationTimestamp;
     private Long lastModification;
+    private boolean pinned;
 
     public Note(int id) {
         this.id = id;
         this.title = "";
         this.content = "";
+        this.tag ="";
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
     }
 
     @Ignore
     public Note(String title, String content) {
         this.title = title;
         this.content = content;
+        this.tag = "";
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
+    }
+
+    @Ignore
+    public Note(String title, String content, String tag) {
+        this.title = title;
+        this.content = content;
+        this.tag = tag;
+        this.creationTimestamp = System.currentTimeMillis();
+        this.lastModification = this.creationTimestamp;
+        this.pinned = false;
     }
 
     @Ignore
@@ -34,17 +50,41 @@ public class Note {
         this.id = id;
         this.title = title;
         this.content = "";
+        this.tag = "";
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
     }
+
 
     @Ignore
     public Note(int id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.tag = "";
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
+        this.pinned = false;
+    }
+
+    @Ignore
+    public Note(int id, String title, String content, String tag) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.tag = tag;
+        this.creationTimestamp = System.currentTimeMillis();
+        this.lastModification = this.creationTimestamp;
+        this.pinned = false;
+    }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
     }
 
     public int getId() {
@@ -71,6 +111,14 @@ public class Note {
         this.content = content;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     public Long getCreationTimestamp() {
         return creationTimestamp;
     }
@@ -93,6 +141,7 @@ public class Note {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", tag='" + tag + '\'' +
                 ", creationTimestamp=" + creationTimestamp +
                 ", lastModification=" + lastModification +
                 '}';
