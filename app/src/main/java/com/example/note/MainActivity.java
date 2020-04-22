@@ -1,7 +1,10 @@
 package com.example.note;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.example.note.controller.NoteManager;
 import com.example.note.db.AppDatabase;
 import com.example.note.db.DatabaseHelper;
 import com.example.note.db.GetNotesTask;
@@ -41,6 +44,24 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_empty_notes) {
+            Bundle bundle = new Bundle();
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Empty Notes")
+                    .setMessage("Are you sure you want to delete all stored notes?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            NoteManager manager = NoteManager.getInstance();
+                            manager.emptyNotes();
+                        }
+                    })
+                    .show();
             return true;
         }
 
