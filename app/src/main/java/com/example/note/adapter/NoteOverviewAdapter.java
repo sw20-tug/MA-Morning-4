@@ -67,7 +67,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Actions");
 
-                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note, Delete Tag"};
+                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note", "Delete Tag"};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
