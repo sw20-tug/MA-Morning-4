@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,8 +20,10 @@ import com.example.note.adapter.NoteOverviewAdapter;
 import com.example.note.R;
 import com.example.note.controller.NoteManager;
 import com.example.note.model.Note;
+import com.example.note.model.NoteComparator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Collections;
 import java.util.List;
 
 public class NoteOverviewFragment extends Fragment {
@@ -28,11 +32,14 @@ public class NoteOverviewFragment extends Fragment {
     private List<Note> mAllNotes;
     private NoteManager mNoteManager;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.overview_fragment, container, false);
         Context context = inflater.getContext();
+
+        setHasOptionsMenu(true);
 
         mNoteManager = NoteManager.getInstance();
         mAllNotes = mNoteManager.getNotes();
@@ -96,5 +103,43 @@ public class NoteOverviewFragment extends Fragment {
             mAllNotes = mNoteManager.getNotes();
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.sort) {
+            showSortDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void sortNotesList(String categorie) {
+        Collections.sort(mAllNotes, new NoteComparator(categorie));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void showSortDialog() {
+        final CharSequence[] items = {"Title", "Date"};
+        new AlertDialog.Builder(NoteOverviewFragment.super.getContext())
+                .setTitle("Sort Notes")
+                .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setNegativeButton("No", null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ListView lw = ((AlertDialog)dialog).getListView();
+                        int i = lw.getCheckedItemPosition();
+                        Log.i("TEST",items[i].toString());
+                        sortNotesList(items[i].toString());                    }
+                })
+                .show();
     }
 }
