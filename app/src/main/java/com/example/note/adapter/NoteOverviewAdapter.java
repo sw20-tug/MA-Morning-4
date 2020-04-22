@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,10 @@ import com.example.note.model.Note;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
-public class NoteOverviewAdapter extends ArrayAdapter<Note> {
+public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer {
     private final Context context;
     private List<Note> mAllNotes;
     private NoteManager mNoteManager;
@@ -83,19 +86,19 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> {
                                 bundle = new Bundle();
                                 bundle.putInt("note_id", note.getId());
                                 new AlertDialog.Builder(context)
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .setTitle("Delete Note")
-                                    .setMessage("Are you sure you want to delete note " +note.getTitle() + " ?")
-                                    .setNegativeButton("No", null)
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            mNoteManager.deleteNote(note);
-                                            mAllNotes.remove(note);
-                                            notifyDataSetChanged();
-                                        }
-                                    })
-                                    .show();
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setTitle("Delete Note")
+                                        .setMessage("Are you sure you want to delete note " +note.getTitle() + " ?")
+                                        .setNegativeButton("No", null)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mNoteManager.deleteNote(note);
+                                                mAllNotes.remove(note);
+                                                notifyDataSetChanged();
+                                            }
+                                        })
+                                        .show();
                         }
                     }
                 });
@@ -106,5 +109,12 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> {
         });
 
         return rowView;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        mAllNotes.clear();
+        mAllNotes.addAll((List<Note>) arg);
+        notifyDataSetChanged();
     }
 }

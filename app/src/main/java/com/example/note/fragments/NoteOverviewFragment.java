@@ -39,6 +39,7 @@ public class NoteOverviewFragment extends Fragment {
 
         ListView listView = view.findViewById(R.id.overview_list);
         mAdapter = new NoteOverviewAdapter(context, R.layout.overview_list_item, mAllNotes, NoteOverviewFragment.this);
+        mNoteManager.addObserver(mAdapter);
         listView.setAdapter(mAdapter);
 
         FloatingActionButton new_note_btn = view.findViewById(R.id.overview_new_note_btn);
