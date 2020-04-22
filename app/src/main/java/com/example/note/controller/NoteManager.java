@@ -79,4 +79,9 @@ public class NoteManager extends Observable {
 
     public void shareNote(int noteId) {}
 
+    public void deleteTagOfNote(int i) {
+        Note note = getNoteById(i);
+        note.setTag("");
+        updateNote(note);
+    }
 }

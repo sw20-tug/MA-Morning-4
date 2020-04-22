@@ -1,6 +1,7 @@
 package com.example.note;
 
 import com.example.note.controller.NoteManager;
+import com.example.note.model.Note;
 
 import org.junit.After;
 import org.junit.Test;
@@ -95,6 +96,27 @@ public class NoteManagerUnitTest {
         noteManager.addNote(title, content, tag);
 
         assertEquals(tag, noteManager.getNoteById(id).getTag());
+    }
+
+    @Test
+    public void removeTagTest() {
+        // arrange
+        Integer id = 1;
+        String title = "Test1";
+        String content = "Hallo, ich bin ein Testnote!";
+        String tag = "sport";
+
+        NoteManager noteManager = NoteManager.getInstance();
+        noteManager.addNote(title, content, tag);
+
+        // act
+        noteManager.deleteTagOfNote(id);
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException e) {}
+
+        // assert
+        assertEquals("", noteManager.getNoteById(id).getTag());
     }
 
 }
