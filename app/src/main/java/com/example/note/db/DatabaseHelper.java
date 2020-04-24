@@ -3,6 +3,7 @@ package com.example.note.db;
 import android.content.Context;
 
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 import com.example.note.controller.NoteManager;
 
@@ -22,6 +23,7 @@ public class DatabaseHelper {
     public void initDb(Context context) {
         db = Room.databaseBuilder(context,
                 AppDatabase.class, "note-db").build();
+
     }
 
     public AppDatabase getDb() {

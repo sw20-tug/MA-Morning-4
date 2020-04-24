@@ -19,17 +19,22 @@ import com.example.note.MainActivity;
 import com.example.note.adapter.NoteOverviewAdapter;
 import com.example.note.R;
 import com.example.note.controller.NoteManager;
+import com.example.note.dialogs.FilterDialog;
 import com.example.note.model.Note;
 import com.example.note.model.NoteComparator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 public class NoteOverviewFragment extends Fragment {
 
     private NoteOverviewAdapter mAdapter;
     private List<Note> mAllNotes;
+    private List<Note> mNotesCopy;
     private NoteManager mNoteManager;
 
 
@@ -46,6 +51,7 @@ public class NoteOverviewFragment extends Fragment {
 
         ListView listView = view.findViewById(R.id.overview_list);
         mAdapter = new NoteOverviewAdapter(context, R.layout.overview_list_item, mAllNotes, NoteOverviewFragment.this);
+        mNoteManager.addObserver(mAdapter);
         listView.setAdapter(mAdapter);
 
         FloatingActionButton new_note_btn = view.findViewById(R.id.overview_new_note_btn);
@@ -78,11 +84,18 @@ public class NoteOverviewFragment extends Fragment {
             showSortDialog();
             return true;
         }
+        else if (id == R.id.filter) {
+            showFilterDialog();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     private void sortNotesList(String categorie) {
-        Collections.sort(mAllNotes, new NoteComparator(categorie));
+        if(categorie.equals("Title"))
+            Collections.sort(mAllNotes, new NoteComparator(categorie));
+        else
+            Collections.sort(mAllNotes, new NoteComparator(categorie).reversed());
         mAdapter.notifyDataSetChanged();
     }
 
@@ -96,16 +109,32 @@ public class NoteOverviewFragment extends Fragment {
 
                     }
                 })
-                .setNegativeButton("No", null)
+                .setNegativeButton("Cancel", null)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ListView lw = ((AlertDialog)dialog).getListView();
                         int i = lw.getCheckedItemPosition();
-                        Log.i("TEST",items[i].toString());
                         sortNotesList(items[i].toString());                    }
                 })
                 .show();
+    }
+
+    private void showFilterDialog() {
+        FilterDialog dialog = new FilterDialog(this);
+        dialog.setTitle(R.string.filter);
+        dialog.show();
+    }
+
+    public void filterByTag(String tag) {
+        mNotesCopy = mAllNotes;
+        Log.i("TAG",tag);
+        mAllNotes.removeIf(note -> !note.getTag().equals(tag));
+        mAdapter.notifyDataSetChanged();
+    }
+    
+    public List<Note> getAllNotes() {
+        return mAllNotes;
     }
 }

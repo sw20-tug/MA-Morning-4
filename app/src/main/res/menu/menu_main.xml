@@ -9,5 +9,13 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/sort"
-        android:title="Sort" />
+        android:title="@string/sort" />
+    <item
+        android:id="@+id/filter"
+        android:title="@string/filter" />
+    <item
+        android:id="@+id/action_empty_notes"
+        android:orderInCategory="100"
+        android:title="@string/action_empty_notes"
+        app:showAsAction="never" />
 </menu>
