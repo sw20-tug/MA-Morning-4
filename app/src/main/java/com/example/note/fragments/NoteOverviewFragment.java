@@ -92,15 +92,15 @@ public class NoteOverviewFragment extends Fragment {
     }
 
     private void sortNotesList(String categorie) {
-        if(categorie.equals("Title"))
+        if(categorie.equals("Title") || categorie.equals("Date"))
             Collections.sort(mAllNotes, new NoteComparator(categorie));
-        else
+        else if(categorie.equals("Title desc") || categorie.equals("Date desc"))
             Collections.sort(mAllNotes, new NoteComparator(categorie).reversed());
         mAdapter.notifyDataSetChanged();
     }
 
     private void showSortDialog() {
-        final CharSequence[] items = {"Title", "Date"};
+        final CharSequence[] items = {"Title", "Title desc", "Date", "Date desc"};
         new AlertDialog.Builder(NoteOverviewFragment.super.getContext())
                 .setTitle("Sort Notes")
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
