@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
         TextView note_description = rowView.findViewById(R.id.overview_note_description);
         TextView note_tag = rowView.findViewById(R.id.overview_note_tag);
         TextView note_timestamp = rowView.findViewById(R.id.overview_note_timestamp);
+        ImageView pinned_view = rowView.findViewById(R.id.pin);
 
         final Note note = mAllNotes.get(position);
 
@@ -58,6 +60,9 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
         note_description.setText(note.getContent());
         note_tag.setText(note.getTag());
         note_timestamp.setText(TIME_FORMATTER.format(note.getLastModification()));
+
+        if(note.isPinned())
+            pinned_view.setVisibility(View.VISIBLE);
 
         ImageButton moreButton = rowView.findViewById(R.id.overview_item_more_btn);
 
@@ -75,6 +80,10 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                             case 0:
                                 note.setPinned(!note.isPinned());
                                 mNoteManager.updateNote(note);
+                                if(note.isPinned())
+                                    pinned_view.setVisibility(View.VISIBLE);
+                                else
+                                    pinned_view.setVisibility(View.INVISIBLE);
                                 break;
                             case 1:
                                 Bundle bundle = new Bundle();

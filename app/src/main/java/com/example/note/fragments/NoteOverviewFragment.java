@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ import com.example.note.model.Note;
 import com.example.note.model.NoteComparator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +38,7 @@ public class NoteOverviewFragment extends Fragment {
     private List<Note> mAllNotes;
     private List<Note> mNotesCopy;
     private NoteManager mNoteManager;
+    private Button mRemoveFiltersBtn;
 
 
     @Override
@@ -47,17 +50,33 @@ public class NoteOverviewFragment extends Fragment {
         setHasOptionsMenu(true);
 
         mNoteManager = NoteManager.getInstance();
-        mAllNotes = mNoteManager.getNotes();
+        mAllNotes = new ArrayList<>(mNoteManager.getNotes());
+        mNotesCopy = new ArrayList<>(mAllNotes);
 
         ListView listView = view.findViewById(R.id.overview_list);
         mAdapter = new NoteOverviewAdapter(context, R.layout.overview_list_item, mAllNotes, NoteOverviewFragment.this);
         mNoteManager.addObserver(mAdapter);
         listView.setAdapter(mAdapter);
 
+        mRemoveFiltersBtn = view.findViewById(R.id.removeFilterBtn);
+        mRemoveFiltersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAllNotes.clear();
+                mAllNotes.addAll(mNotesCopy);
+                mRemoveFiltersBtn.setVisibility(View.GONE);
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
         FloatingActionButton new_note_btn = view.findViewById(R.id.overview_new_note_btn);
         new_note_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mAllNotes.clear();
+                mAllNotes.addAll(mNotesCopy);
+                mRemoveFiltersBtn.setVisibility(View.GONE);
+                mAdapter.notifyDataSetChanged();
                 Bundle bundle = new Bundle();
                 bundle.putInt("note_id", -1);
                 NavHostFragment.findNavController(NoteOverviewFragment.this)
@@ -127,13 +146,14 @@ public class NoteOverviewFragment extends Fragment {
         dialog.show();
     }
 
-    public void filterByTag(String tag) {
-        mNotesCopy = mAllNotes;
+    public void filterByTagAndDate(String tag, Long from, Long to) {
+        mNotesCopy = new ArrayList<>(mAllNotes);
         Log.i("TAG",tag);
-        mAllNotes.removeIf(note -> !note.getTag().equals(tag));
+        mAllNotes.removeIf(note -> (!note.getTag().equals(tag) || note.getLastModification() > to || note.getLastModification() < from));
+        mRemoveFiltersBtn.setVisibility(View.VISIBLE);
         mAdapter.notifyDataSetChanged();
     }
-    
+
     public List<Note> getAllNotes() {
         return mAllNotes;
     }
