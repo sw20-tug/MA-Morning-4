@@ -1,15 +1,19 @@
 package com.example.note.fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.note.MainActivity;
 import com.example.note.adapter.NoteOverviewAdapter;
 import com.example.note.R;
 import com.example.note.controller.NoteManager;
@@ -35,6 +39,7 @@ public class NoteOverviewFragment extends Fragment {
 
         ListView listView = view.findViewById(R.id.overview_list);
         mAdapter = new NoteOverviewAdapter(context, R.layout.overview_list_item, mAllNotes, NoteOverviewFragment.this);
+        mNoteManager.addObserver(mAdapter);
         listView.setAdapter(mAdapter);
 
         FloatingActionButton new_note_btn = view.findViewById(R.id.overview_new_note_btn);

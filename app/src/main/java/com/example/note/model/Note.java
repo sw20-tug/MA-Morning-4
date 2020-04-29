@@ -5,7 +5,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Note implements Comparable<Note> {
+public class Note {
     @PrimaryKey
     private int id;
     private String title;
@@ -159,8 +159,4 @@ public class Note implements Comparable<Note> {
         return false;
     }
 
-    @Override
-    public int compareTo(Note note) {
-        return note.lastModification.compareTo(lastModification);
-    }
 }

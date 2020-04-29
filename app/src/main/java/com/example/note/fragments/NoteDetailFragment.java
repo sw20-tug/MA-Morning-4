@@ -58,7 +58,7 @@ public class NoteDetailFragment extends Fragment {
                     note.setTitle(nNoteTitle.getText().toString());
                     note.setContent(nNoteDescription.getText().toString());
                     note.setTag(nNoteTag.getText().toString());
-                    nNoteManager.updateNote(note, true);
+                    nNoteManager.updateNote(note);
                 }
                 NavHostFragment.findNavController(NoteDetailFragment.this)
                         .navigate(R.id.action_detail_to_overview_fragment, null);
