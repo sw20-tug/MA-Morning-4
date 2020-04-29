@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +23,8 @@ import com.example.note.fragments.NoteOverviewFragment;
 import com.example.note.model.Note;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Observable;
@@ -43,27 +44,36 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
         this.mAllNotes = allNotes;
         this.mNoteManager = NoteManager.getInstance();
         this.currentFragment = currentFragment;
+
+        notifyDataSetChanged();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View rowView = inflater.inflate(R.layout.overview_list_item, null);
+
+        LinearLayout header_layout = rowView.findViewById(R.id.header);
+        TextView header = rowView.findViewById(R.id.overview_note_header);
+
         TextView note_title = rowView.findViewById(R.id.overview_note_title);
         TextView note_description = rowView.findViewById(R.id.overview_note_description);
         TextView note_tag = rowView.findViewById(R.id.overview_note_tag);
         TextView note_timestamp = rowView.findViewById(R.id.overview_note_timestamp);
-        ImageView pinned_view = rowView.findViewById(R.id.pin);
 
         final Note note = mAllNotes.get(position);
+
+        if (position == 0 && note.isPinned()) {
+            header_layout.setVisibility(View.VISIBLE);
+        } else if(position > 0 && mAllNotes.get(position-1).isPinned() && !note.isPinned()) {
+            header_layout.setVisibility(View.VISIBLE);
+            header.setVisibility(View.GONE);
+        }
 
         note_title.setText(note.getTitle());
         note_description.setText(note.getContent());
         note_tag.setText(note.getTag());
         note_timestamp.setText(TIME_FORMATTER.format(note.getLastModification()));
-
-        if(note.isPinned())
-            pinned_view.setVisibility(View.VISIBLE);
 
         ImageButton moreButton = rowView.findViewById(R.id.overview_item_more_btn);
 
@@ -80,12 +90,9 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                         switch (which) {
                             case 0:
                                 note.setPinned(!note.isPinned());
-                                mNoteManager.updateNote(note);
-                                if(note.isPinned())
-                                    pinned_view.setVisibility(View.VISIBLE);
-                                else
-                                    pinned_view.setVisibility(View.INVISIBLE);
+                                mNoteManager.updateNote(note, false);
                                 ((NoteOverviewFragment) currentFragment).sortNotesList("Date");
+                                notifyDataSetChanged();
                                 break;
                             case 1:
                                 Bundle bundle = new Bundle();
@@ -140,5 +147,10 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
         mAllNotes.clear();
         mAllNotes.addAll((List<Note>) arg);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 }

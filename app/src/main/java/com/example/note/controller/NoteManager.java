@@ -57,8 +57,9 @@ public class NoteManager extends Observable {
         }
     }
 
-    public void updateNote(Note note) {
-        note.setLastModification(System.currentTimeMillis());
+    public void updateNote(Note note, boolean set_modification) {
+        if(set_modification)
+            note.setLastModification(System.currentTimeMillis());
         new UpdateNotesTask().execute(note);
     }
 
@@ -82,6 +83,6 @@ public class NoteManager extends Observable {
     public void deleteTagOfNote(int i) {
         Note note = getNoteById(i);
         note.setTag("");
-        updateNote(note);
+        updateNote(note, true);
     }
 }
