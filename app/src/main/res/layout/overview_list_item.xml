@@ -6,36 +6,9 @@
     android:padding="6dip">
 
     <LinearLayout
-        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryLight"
-        android:orientation="horizontal"
-        android:minHeight="5dp"
-        android:layout_marginBottom="5dp"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/overview_note_header"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="5dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@string/list_overview_header"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/header">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -1,14 +1,16 @@
 package com.example.note.controller;
 
 import com.example.note.db.DeleteNotesTask;
+import com.example.note.db.EmptyNotesTableTask;
 import com.example.note.db.InsertNotesTask;
 import com.example.note.db.UpdateNotesTask;
 import com.example.note.model.Note;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class NoteManager {
+public class NoteManager extends Observable {
     private static NoteManager instance = null;
 
     private NoteManager() {
@@ -39,11 +41,11 @@ public class NoteManager {
     }
 
     public Note getNoteById(int id) {
-      for(Note note : notes) {
-          if(note.getId() == id)
-            return note;
-      }
-      return null;
+        for(Note note : notes) {
+            if(note.getId() == id)
+                return note;
+        }
+        return null;
     }
 
     public Integer getNextFreeId() {
@@ -55,9 +57,8 @@ public class NoteManager {
         }
     }
 
-    public void updateNote(Note note, boolean set_modification) {
-        if(set_modification)
-            note.setLastModification(System.currentTimeMillis());
+    public void updateNote(Note note) {
+        note.setLastModification(System.currentTimeMillis());
         new UpdateNotesTask().execute(note);
     }
 
@@ -66,10 +67,21 @@ public class NoteManager {
         new DeleteNotesTask().execute(note);
     }
 
+    public void emptyNotes() {
+        notes.clear();
+        notifyObservers(notes);
+        new EmptyNotesTableTask().execute();
+    }
+
     public void importNotes() {}
 
     public void exportNotes() {}
 
     public void shareNote(int noteId) {}
 
+    public void deleteTagOfNote(int i) {
+        Note note = getNoteById(i);
+        note.setTag("");
+        updateNote(note);
+    }
 }
