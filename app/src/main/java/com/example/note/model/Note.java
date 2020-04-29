@@ -164,3 +164,4 @@ public class Note implements Comparable<Note> {
         return note.lastModification.compareTo(lastModification);
     }
 }
+

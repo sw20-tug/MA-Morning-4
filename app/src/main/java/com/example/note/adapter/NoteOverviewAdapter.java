@@ -19,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.note.R;
 import com.example.note.controller.NoteManager;
+import com.example.note.fragments.NoteOverviewFragment;
 import com.example.note.model.Note;
 
 import java.text.SimpleDateFormat;
@@ -90,6 +91,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                             case 0:
                                 note.setPinned(!note.isPinned());
                                 mNoteManager.updateNote(note, false);
+                                ((NoteOverviewFragment) currentFragment).sortNotesList("Date");
                                 notifyDataSetChanged();
                                 break;
                             case 1:
@@ -149,26 +151,6 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
 
     @Override
     public void notifyDataSetChanged() {
-        sortPinned();
         super.notifyDataSetChanged();
-    }
-
-    private void sortPinned() {
-        List<Note> pinnedNotes = new ArrayList<>();
-        List<Note> otherNotes = new ArrayList<>();
-
-        for(Note note : mAllNotes) {
-            if(note.isPinned())
-                pinnedNotes.add(note);
-            else
-                otherNotes.add(note);
-        }
-
-        Collections.sort(pinnedNotes);
-        Collections.sort(otherNotes);
-
-        mAllNotes.clear();
-        mAllNotes.addAll(pinnedNotes);
-        mAllNotes.addAll(otherNotes);
     }
 }

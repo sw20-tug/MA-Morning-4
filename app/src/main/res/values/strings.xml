@@ -10,5 +10,9 @@
     <string name="description">Description</string>
     <string name="btn_save">Save</string>
     <string name="tag">Tag</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+    <string name="remove_filter">Remove filters</string>
     <string name="list_overview_header">Pinned</string>
 </resources>
+
