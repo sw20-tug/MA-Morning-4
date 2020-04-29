@@ -83,7 +83,8 @@ public class NoteOverviewFragment extends Fragment {
                         .navigate(R.id.action_overview_to_detail_fragment, bundle);
             }
         });
-
+        sortNotesList("Date");
+        mAdapter.notifyDataSetChanged();
         return view;
     }
 
@@ -110,7 +111,7 @@ public class NoteOverviewFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void sortNotesList(String categorie) {
+    public void sortNotesList(String categorie) {
         if(categorie.equals("Title") || categorie.equals("Date"))
             Collections.sort(mAllNotes, new NoteComparator(categorie));
         else if(categorie.equals("Title desc") || categorie.equals("Date desc"))
@@ -148,8 +149,9 @@ public class NoteOverviewFragment extends Fragment {
 
     public void filterByTagAndDate(String tag, Long from, Long to) {
         mNotesCopy = new ArrayList<>(mAllNotes);
-        Log.i("TAG",tag);
-        mAllNotes.removeIf(note -> (!note.getTag().equals(tag) || note.getLastModification() > to || note.getLastModification() < from));
+        final Long fromVal = (from == null ? Long.MIN_VALUE : from);
+        final Long toVal = (to == null ? Long.MAX_VALUE : to);
+        mAllNotes.removeIf(note -> (!note.getTag().equals(tag) || note.getLastModification() > toVal || note.getLastModification() < fromVal));
         mRemoveFiltersBtn.setVisibility(View.VISIBLE);
         mAdapter.notifyDataSetChanged();
     }

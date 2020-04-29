@@ -20,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.note.R;
 import com.example.note.controller.NoteManager;
+import com.example.note.fragments.NoteOverviewFragment;
 import com.example.note.model.Note;
 
 import java.text.SimpleDateFormat;
@@ -84,6 +85,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                                     pinned_view.setVisibility(View.VISIBLE);
                                 else
                                     pinned_view.setVisibility(View.INVISIBLE);
+                                ((NoteOverviewFragment) currentFragment).sortNotesList("Date");
                                 break;
                             case 1:
                                 Bundle bundle = new Bundle();
