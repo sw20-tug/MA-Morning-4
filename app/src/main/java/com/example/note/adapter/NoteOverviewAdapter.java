@@ -72,7 +72,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Actions");
 
-                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note"};
+                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note", "Delete Tag"};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -92,8 +92,6 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                                         .navigate(R.id.action_overview_to_detail_fragment, bundle);
                                 break;
                             case 2:
-                                bundle = new Bundle();
-                                bundle.putInt("note_id", note.getId());
                                 new AlertDialog.Builder(context)
                                         .setIcon(android.R.drawable.ic_dialog_alert)
                                         .setTitle("Delete Note")
@@ -104,6 +102,21 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mNoteManager.deleteNote(note);
                                                 mAllNotes.remove(note);
+                                                notifyDataSetChanged();
+                                            }
+                                        })
+                                        .show();
+                                break;
+                            case 3:
+                                new AlertDialog.Builder(context)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setTitle("Delete Tag")
+                                        .setMessage("Are you sure you want to delete the Tags " +note.getTag() + " ?")
+                                        .setNegativeButton("No", null)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mNoteManager.deleteTagOfNote(note.getId());
                                                 notifyDataSetChanged();
                                             }
                                         })
