@@ -1,11 +1,15 @@
 package com.example.note.fragments;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -48,8 +52,9 @@ public class NoteDetailFragment extends Fragment {
         saveNoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int result = 0;
                 if(note == null) {
-                    nNoteManager.addNote(
+                    result = nNoteManager.addNote(
                             nNoteTitle.getText().toString(),
                             nNoteDescription.getText().toString(),
                             nNoteTag.getText().toString()
@@ -60,8 +65,19 @@ public class NoteDetailFragment extends Fragment {
                     note.setTag(nNoteTag.getText().toString());
                     nNoteManager.updateNote(note, true);
                 }
-                NavHostFragment.findNavController(NoteDetailFragment.this)
-                        .navigate(R.id.action_detail_to_overview_fragment, null);
+                if(result != 0) {
+
+                    for(int i = 0; i < 2; i++){
+                        Toast noTitle = Toast.makeText(getContext(), "Title must have at least 3 characters!", Toast.LENGTH_LONG);
+                        noTitle.getView().getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                        noTitle.setGravity(Gravity.TOP|Gravity.CENTER, 0, 100);
+                        noTitle.show();
+                    }
+                } else {
+                    NavHostFragment.findNavController(NoteDetailFragment.this)
+                            .navigate(R.id.action_detail_to_overview_fragment, null);
+                }
+
             }
         });
 
