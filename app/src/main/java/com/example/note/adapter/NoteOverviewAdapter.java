@@ -23,8 +23,6 @@ import com.example.note.fragments.NoteOverviewFragment;
 import com.example.note.model.Note;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Observable;
@@ -83,7 +81,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Actions");
 
-                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note", "Delete Tag"};
+                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note", "Delete Tag", "Mark Note as done"};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -126,6 +124,22 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mNoteManager.deleteTagOfNote(note.getId());
+                                                notifyDataSetChanged();
+                                            }
+                                        })
+                                        .show();
+                            case 4:
+                                new AlertDialog.Builder(context)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setTitle("Complete Note")
+                                        .setMessage("Are you sure you want to mark the note '"+note.getTag() + "' as done?")
+                                        .setNegativeButton("No", null)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                //TODO: tag note as done
+
                                                 notifyDataSetChanged();
                                             }
                                         })
