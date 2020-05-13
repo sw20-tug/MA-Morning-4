@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">NOTE</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_empty_notes">Empty Notes</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="note_overview_fragment_label">Note Overview</string>
+    <string name="note_detail_fragment_label">Note Detail</string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="btn_save">Save</string>
+    <string name="tag">Tag</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
+    <string name="remove_filter">Remove filters</string>
+    <string name="list_overview_header">Pinned</string>
+</resources>
+

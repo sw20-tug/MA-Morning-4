@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.NoteOverviewFragment">
+
+    <Button
+        android:id="@+id/removeFilterBtn"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@color/colorAccent"
+        android:text="@string/remove_filter"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toTopOf="parent"/>
+
+    <ListView
+        android:id="@+id/overview_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toBottomOf="@+id/removeFilterBtn"></ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/overview_new_note_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dip"
+        android:tint="@color/white"
+        app:srcCompat="@android:drawable/ic_input_add"
+        fab:backgroundTint="@color/colorPrimary"
+        fab:elevation="6dp"
+        fab:fabSize="normal"
+        fab:layout_constraintBottom_toBottomOf="parent"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:pressedTranslationZ="12dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
