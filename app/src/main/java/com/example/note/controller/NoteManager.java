@@ -34,10 +34,14 @@ public class NoteManager extends Observable {
         return notes;
     }
 
-    public void addNote(String title, String description, String tag) {
+    public int addNote(String title, String description, String tag) {
+        if(title == null || title.length() < 3){
+            return -1;
+        }
         final Note note = new Note(getNextFreeId(), title, description, tag);
         notes.add(note);
         new InsertNotesTask().execute(note);
+        return 0;
     }
 
     public Note getNoteById(int id) {
