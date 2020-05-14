@@ -14,5 +14,7 @@
     <string name="filter">Filter</string>
     <string name="remove_filter">Remove filters</string>
     <string name="list_overview_header">Pinned</string>
+    <string name="done">Done</string>
+    <string name="last_modification">Last Modification</string>
 </resources>
 
