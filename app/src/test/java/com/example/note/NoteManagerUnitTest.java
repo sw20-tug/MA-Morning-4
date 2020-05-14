@@ -1,11 +1,11 @@
 package com.example.note;
 
 import com.example.note.controller.NoteManager;
+import com.example.note.model.Note;
 
 import org.junit.After;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class NoteManagerUnitTest {
 
@@ -53,6 +53,13 @@ public class NoteManagerUnitTest {
         assertEquals(result, 0);
         noteManager.deleteNote(noteManager.getNoteById(id));
         assert(noteManager.getNotes().size() == 0);
+
+        result = noteManager.addNote(title, content, tag);
+        assertEquals(noteManager.getNotes().size(), 1);
+
+        Note note = noteManager.getNoteById(3);
+        noteManager.deleteNote(note);
+        assertEquals(noteManager.getNotes().size(), 1);
     }
 
     @Test
@@ -79,6 +86,19 @@ public class NoteManagerUnitTest {
         assert(noteManager.getNoteById(id).getTitle().equals(changedTitle));
         assert(noteManager.getNoteById(id).getLastModification().compareTo(noteManager.
                 getNoteById(id).getCreationTimestamp()) > 0);
+
+        title = "note update";
+        content = "me was updated!";
+        tag = "updateTag";
+
+        Note note = noteManager.getNoteById(id);
+        note.setTitle(title);
+        note.setContent(content);
+        note.setTag(tag);
+        noteManager.updateNote(note, true);
+        assert(noteManager.getNoteById(id).getTitle() == title);
+        assert(noteManager.getNoteById(id).getContent() == content);
+        assert(noteManager.getNoteById(id).getTag() == tag);
     }
 
     @Test
@@ -98,6 +118,28 @@ public class NoteManagerUnitTest {
         assertEquals(result, 0);
         Integer testId = noteManager.getNextFreeId();
         assert(testId == 3);
+        result = noteManager.addNote(title, content, tag);
+        assertEquals(result, 0);
+
+        nextId = noteManager.getNextFreeId();
+        assert(nextId == 4);
+
+        noteManager.deleteNote(noteManager.getNoteById(2));
+        nextId = noteManager.getNextFreeId();
+        assert(nextId == 2);
+
+        result = noteManager.addNote(title, content, tag);
+        assertEquals(result, 0);
+        nextId = noteManager.getNextFreeId();
+        assert(nextId == 4);
+        result = noteManager.addNote(title, content, tag);
+        assertEquals(result, 0);
+        nextId = noteManager.getNextFreeId();
+        assert(nextId == 5);
+
+        noteManager.deleteNote(noteManager.getNoteById(1));
+        nextId = noteManager.getNextFreeId();
+        assert(nextId == 1);
     }
 
     @Test
@@ -134,6 +176,30 @@ public class NoteManagerUnitTest {
 
         // assert
         assertEquals("", noteManager.getNoteById(id).getTag());
+    }
+
+    @Test
+    public void emptyNotesTest() {
+        String title = "Note1";
+        String content = "my first note";
+        String tag = "";
+
+        NoteManager noteManager = NoteManager.getInstance();
+        int result = noteManager.addNote(title, content, tag);
+        assertEquals(result, 0);
+
+        title = "Note2";
+        content = "my second note";
+        tag = "taggy-tag";
+
+        result = noteManager.addNote(title, content, tag);
+        assertEquals(result, 0);
+
+        assert(noteManager.getNotes().size() == 2);
+
+        noteManager.emptyNotes();
+
+        assert(noteManager.getNotes().size() == 0);
     }
 
 }
