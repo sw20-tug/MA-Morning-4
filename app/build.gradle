@@ -60,4 +60,6 @@ dependencies {
 
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
+    implementation 'com.opencsv:opencsv:5.1'
 }
