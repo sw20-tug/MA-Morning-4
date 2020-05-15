@@ -20,7 +20,13 @@ import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity {
+    private NoteManager noteManager = NoteManager.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DatabaseHelper.getInstance().initDb(getApplicationContext());
@@ -61,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            NoteManager manager = NoteManager.getInstance();
-                            manager.emptyNotes();
+                            noteManager.emptyNotes();
                         }
                     })
                     .show();
@@ -72,11 +77,30 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_export_notes) {
             Toast.makeText(this, "Export Notes to Device...", Toast.LENGTH_LONG).show();
             // export data to device
-            NoteManager noteManager = NoteManager.getInstance();
             noteManager.exportNotes(this);
             Toast.makeText(this, "Stored Notes to Device", Toast.LENGTH_LONG).show();
         }
 
+        if (id == R.id.action_import_notes) {
+            File dir = this.getFilesDir();
+
+            final String[] files = dir.list();
+            Arrays.sort(files, Collections.reverseOrder());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Select File");
+            builder.setItems(files, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String fileName = files[i];
+                    for(File file : getApplicationContext().getFilesDir().listFiles()) {
+                        if (file.getName().equals(fileName)) {
+                            noteManager.importNotes(file);
+                        }
+                    }
+                }
+            }).show();
+        }
         return super.onOptionsItemSelected(item);
     }
 }

@@ -84,7 +84,9 @@ public class NoteManager extends Observable {
         new EmptyNotesTableTask().execute();
     }
 
-    public void importNotes() {}
+    public void importNotes(File file) {
+        //TODO: readout from file
+    }
 
     public void exportNotes(Context context) {
         String fileName = "export_" + System.currentTimeMillis();
