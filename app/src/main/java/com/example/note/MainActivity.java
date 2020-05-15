@@ -18,6 +18,7 @@ import androidx.room.Room;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -66,6 +67,14 @@ public class MainActivity extends AppCompatActivity {
                     })
                     .show();
             return true;
+        }
+
+        if (id == R.id.action_export_notes) {
+            Toast.makeText(this, "Export Notes to Device...", Toast.LENGTH_LONG).show();
+            // export data to device
+            NoteManager noteManager = NoteManager.getInstance();
+            noteManager.exportNotes(this);
+            Toast.makeText(this, "Stored Notes to Device", Toast.LENGTH_LONG).show();
         }
 
         return super.onOptionsItemSelected(item);

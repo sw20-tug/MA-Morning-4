@@ -1,11 +1,17 @@
 package com.example.note.controller;
 
+import android.content.Context;
+
 import com.example.note.db.DeleteNotesTask;
 import com.example.note.db.EmptyNotesTableTask;
 import com.example.note.db.InsertNotesTask;
 import com.example.note.db.UpdateNotesTask;
 import com.example.note.model.Note;
+import com.opencsv.CSVWriter;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -80,7 +86,31 @@ public class NoteManager extends Observable {
 
     public void importNotes() {}
 
-    public void exportNotes() {}
+    public void exportNotes(Context context) {
+        String fileName = "export_" + System.currentTimeMillis();
+        List<String[]> content = new ArrayList<String[]>();
+        content.add(new String[] {"Title", "Content", "Tag", "creationTimestamp", "lastModification", "Pinned"});
+
+        //TODO: get notes and append to string
+
+        writeFileToStorage(context, fileName, content);
+
+    }
+
+    public void writeFileToStorage(Context context, String fileName, List<String[]> content) {
+        File file = new File(context.getFilesDir(),"export_" + System.currentTimeMillis() + ".csv");
+
+        try {
+            FileWriter outputFile = new FileWriter(file);
+            CSVWriter writer = new CSVWriter(outputFile);
+
+            writer.writeAll(content);
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void shareNote(int noteId) {}
 
