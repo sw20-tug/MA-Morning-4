@@ -91,7 +91,14 @@ public class NoteManager extends Observable {
         List<String[]> content = new ArrayList<String[]>();
         content.add(new String[] {"Title", "Content", "Tag", "creationTimestamp", "lastModification", "Pinned"});
 
-        //TODO: get notes and append to string
+        for(Note note : getNotes()) {
+            content.add(new String[] {note.getTitle(),
+                                      note.getContent(),
+                                      note.getTag(),
+                                      note.getCreationTimestamp().toString(),
+                                      note.getLastModification().toString(),
+                                      note.isPinned() ? "True" : "False"});
+        }
 
         writeFileToStorage(context, fileName, content);
 

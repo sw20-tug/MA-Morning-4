@@ -202,4 +202,17 @@ public class NoteManagerUnitTest {
         assert(noteManager.getNotes().size() == 0);
     }
 
+
+    /********************************** Import/Export Test ****************************************/
+
+    @Test
+    public void exportDataTest() {
+        assert(true);
+    }
+
+    @Test
+    public void importDataTest() {
+        assert(true);
+    }
+
 }
