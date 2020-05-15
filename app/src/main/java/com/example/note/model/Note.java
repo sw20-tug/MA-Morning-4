@@ -14,6 +14,8 @@ public class Note implements Comparable<Note> {
     private Long creationTimestamp;
     private Long lastModification;
     private boolean pinned;
+    private boolean markedAsDone;
+    private Long completionTimestamp;
 
     public Note(int id) {
         this.id = id;
@@ -23,6 +25,8 @@ public class Note implements Comparable<Note> {
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
         this.pinned = false;
+        this.markedAsDone = false;
+        this.completionTimestamp = 0L;
     }
 
     @Ignore
@@ -33,6 +37,8 @@ public class Note implements Comparable<Note> {
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
         this.pinned = false;
+        this.markedAsDone = false;
+        this.completionTimestamp = 0L;
     }
 
     @Ignore
@@ -43,6 +49,8 @@ public class Note implements Comparable<Note> {
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
         this.pinned = false;
+        this.markedAsDone = false;
+        this.completionTimestamp = 0L;
     }
 
     @Ignore
@@ -54,6 +62,8 @@ public class Note implements Comparable<Note> {
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
         this.pinned = false;
+        this.markedAsDone = false;
+        this.completionTimestamp = 0L;
     }
 
 
@@ -66,6 +76,8 @@ public class Note implements Comparable<Note> {
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
         this.pinned = false;
+        this.markedAsDone = false;
+        this.completionTimestamp = 0L;
     }
 
     @Ignore
@@ -77,6 +89,8 @@ public class Note implements Comparable<Note> {
         this.creationTimestamp = System.currentTimeMillis();
         this.lastModification = this.creationTimestamp;
         this.pinned = false;
+        this.markedAsDone = false;
+        this.completionTimestamp = 0L;
     }
 
     public boolean isPinned() {
@@ -135,6 +149,22 @@ public class Note implements Comparable<Note> {
         this.lastModification = lastModification;
     }
 
+    public boolean isMarkedAsDone() {
+        return markedAsDone;
+    }
+
+    public void setMarkedAsDone(boolean markedAsDone) {
+        this.markedAsDone = markedAsDone;
+    }
+
+    public Long getCompletionTimestamp() {
+        return completionTimestamp;
+    }
+
+    public void setCompletionTimestamp(Long completionTimestamp) {
+        this.completionTimestamp = completionTimestamp;
+    }
+
     @Override
     public String toString() {
         return "Note{" +
@@ -144,6 +174,9 @@ public class Note implements Comparable<Note> {
                 ", tag='" + tag + '\'' +
                 ", creationTimestamp=" + creationTimestamp +
                 ", lastModification=" + lastModification +
+                ", pinned=" + pinned +
+                ", markedAsDone=" + markedAsDone +
+                ", completionTimestamp=" + completionTimestamp +
                 '}';
     }
 

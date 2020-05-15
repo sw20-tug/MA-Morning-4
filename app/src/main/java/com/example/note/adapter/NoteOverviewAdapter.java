@@ -58,6 +58,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
         TextView note_description = rowView.findViewById(R.id.overview_note_description);
         TextView note_tag = rowView.findViewById(R.id.overview_note_tag);
         TextView note_timestamp = rowView.findViewById(R.id.overview_note_timestamp);
+        LinearLayout note_done_container = rowView.findViewById(R.id.overview_done_container);
 
         final Note note = mAllNotes.get(position);
 
@@ -67,6 +68,11 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
             header_layout.setVisibility(View.VISIBLE);
             header.setVisibility(View.GONE);
         }
+
+        if (note.isMarkedAsDone())
+            note_done_container.setVisibility(View.VISIBLE);
+        else
+            note_done_container.setVisibility(View.GONE);
 
         note_title.setText(note.getTitle());
         note_description.setText(note.getContent());
@@ -81,7 +87,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Actions");
 
-                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note", "Delete Tag", "Mark Note as done"};
+                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note", "Delete Tag", (!note.isMarkedAsDone()) ? "Mark Note as done" : "Unmark Note as done"};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -128,22 +134,19 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                                             }
                                         })
                                         .show();
+                                break;
                             case 4:
-                                new AlertDialog.Builder(context)
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .setTitle("Complete Note")
-                                        .setMessage("Are you sure you want to mark the note '"+note.getTag() + "' as done?")
-                                        .setNegativeButton("No", null)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
+                                note.setMarkedAsDone(!note.isMarkedAsDone());
 
-                                                //TODO: tag note as done
+                                if(note.isMarkedAsDone())
+                                    note.setCompletionTimestamp(System.currentTimeMillis());
+                                else
+                                    note.setCompletionTimestamp(0L);
 
-                                                notifyDataSetChanged();
-                                            }
-                                        })
-                                        .show();
+                                mNoteManager.updateNote(note, false);
+                                ((NoteOverviewFragment) currentFragment).sortNotesList("Date");
+                                notifyDataSetChanged();
+                                break;
                         }
                     }
                 });
