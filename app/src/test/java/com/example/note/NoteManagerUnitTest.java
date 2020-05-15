@@ -1,18 +1,50 @@
 package com.example.note;
 
+import android.content.Context;
+
 import com.example.note.controller.NoteManager;
 import com.example.note.model.Note;
 
 import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
+@RunWith(MockitoJUnitRunner.class)
 public class NoteManagerUnitTest {
+
+    @Rule
+    public TemporaryFolder mTempFolder = new TemporaryFolder();
+
+    @Mock
+    Context mockContext;
+
+    @Before
+    public void setUp() throws IOException {
+        initMocks(this);
+        when(mockContext.getFilesDir()).thenReturn(mTempFolder.newFolder());
+    }
 
     @After
     public void resetNoteList() {
         NoteManager noteManager = NoteManager.getInstance();
         noteManager.getNotes().clear();
+        mTempFolder.delete();
     }
 
     @Test
@@ -203,11 +235,62 @@ public class NoteManagerUnitTest {
     }
 
 
-    /********************************** Import/Export Test ****************************************/
+    /************ Import/Export Test **************/
 
     @Test
     public void exportDataTest() {
-        assert(true);
+        NoteManager noteManager = NoteManager.getInstance();
+        int result = 0;
+
+        // Create data
+        result = noteManager.addNote("note1", "first note", "");
+        assert(result == 0);
+        result = noteManager.addNote("note2", "second note", "taggy-tag");
+        assert(result == 0);
+        result = noteManager.addNote("note3", "third note", "");
+        assert(result == 0);
+        result = noteManager.addNote("note4", "fourth note", "tag");
+        assert(result == 0);
+
+        // export the notes
+        noteManager.exportNotes(mockContext);
+        File[] files = mockContext.getFilesDir().listFiles();
+        assert (files.length == 1);
+        File file = files[0];
+        List<String> fileContent = new ArrayList<String>();
+        try {
+            fileContent = Files.readAllLines(Paths.get(String.valueOf(file)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert(fileContent.size() == 5); // 4 notes plus header
+
+        //first note
+        assert(fileContent.get(1).contains("note1"));
+        assert(fileContent.get(1).contains("first note"));
+        assert(fileContent.get(1).contains("False"));
+        assert(!fileContent.get(1).contains("tag"));
+        assert(!fileContent.get(1).contains("taggy-tag"));
+
+        //second note
+        assert(fileContent.get(2).contains("note2"));
+        assert(fileContent.get(2).contains("second note"));
+        assert(fileContent.get(2).contains("taggy-tag"));
+        assert(fileContent.get(2).contains("False"));
+
+        //third note
+        assert(fileContent.get(3).contains("note3"));
+        assert(fileContent.get(3).contains("third note"));
+        assert(fileContent.get(3).contains("False"));
+        assert(!fileContent.get(3).contains("tag"));
+        assert(!fileContent.get(3).contains("taggy-tag"));
+
+        //fourth note
+        assert(fileContent.get(4).contains("note4"));
+        assert(fileContent.get(4).contains("fourth note"));
+        assert(fileContent.get(2).contains("tag"));
+        assert(fileContent.get(4).contains("False"));
+        assert(!fileContent.get(4).contains("taggy-tag"));
     }
 
     @Test
