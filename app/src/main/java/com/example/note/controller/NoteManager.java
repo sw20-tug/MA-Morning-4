@@ -13,8 +13,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
+import java.util.Scanner;
 
 public class NoteManager extends Observable {
     private static NoteManager instance = null;
@@ -45,6 +47,24 @@ public class NoteManager extends Observable {
             return -1;
         }
         final Note note = new Note(getNextFreeId(), title, description, tag);
+        notes.add(note);
+        new InsertNotesTask().execute(note);
+        return 0;
+    }
+
+    public int addNote(String title, String content, String tag, String sCreationTimestamp, String sLastModification, boolean pinned) {
+        title = title.substring(1, title.length()-1);
+        content = content.substring(1, content.length()-1);
+        sCreationTimestamp = sCreationTimestamp.substring(1, sCreationTimestamp.length()-1);
+        sLastModification = sLastModification.substring(1, sLastModification.length()-1);
+        Long creationTimestamp = Long.parseLong(sCreationTimestamp);
+        Long lastModification = Long.parseLong(sLastModification);
+
+        if(title == null || title.length() < 3) {
+            return -1;
+        }
+
+        final Note note = new Note(getNextFreeId(), title, content, tag, creationTimestamp, lastModification, pinned, false, 0);
         notes.add(note);
         new InsertNotesTask().execute(note);
         return 0;
@@ -85,7 +105,26 @@ public class NoteManager extends Observable {
     }
 
     public void importNotes(File file) {
-        //TODO: readout from file
+        List<List<String>> lines = new ArrayList<>();
+        try{
+            Scanner inputStream = new Scanner(file);
+            while(inputStream.hasNext()) {
+                String data = inputStream.next();
+                lines.add(Arrays.asList(data.split(",")));
+            }
+            inputStream.close();
+
+            for(int i = 1; i < lines.size(); i++) {
+                addNote(lines.get(i).get(0),
+                        lines.get(i).get(1),
+                        lines.get(i).get(2),
+                        lines.get(i).get(3),
+                        lines.get(i).get(4),
+                        lines.get(i).get(5) == "True");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void exportNotes(Context context) {
@@ -95,11 +134,11 @@ public class NoteManager extends Observable {
 
         for(Note note : getNotes()) {
             content.add(new String[] {note.getTitle(),
-                                      note.getContent(),
-                                      note.getTag(),
-                                      note.getCreationTimestamp().toString(),
-                                      note.getLastModification().toString(),
-                                      note.isPinned() ? "True" : "False"});
+                    note.getContent(),
+                    note.getTag(),
+                    note.getCreationTimestamp().toString(),
+                    note.getLastModification().toString(),
+                    note.isPinned() ? "True" : "False"});
         }
 
         writeFileToStorage(context, fileName, content);

@@ -53,6 +53,17 @@ public class Note implements Comparable<Note> {
         this.completionTimestamp = 0L;
     }
 
+    public Note(int id, String title, String content, String tag, long creationTimestamp, long lastModification, boolean pinned, boolean done, long completionTimestamp) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.creationTimestamp = creationTimestamp;
+        this.lastModification = lastModification;
+        this.pinned = pinned;
+        this.markedAsDone = false;
+        this.completionTimestamp = 0L;
+    }
+
     @Ignore
     public Note(int id, String title) {
         this.id = id;

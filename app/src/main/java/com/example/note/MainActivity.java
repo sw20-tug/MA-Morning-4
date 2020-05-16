@@ -1,24 +1,18 @@
 package com.example.note;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import com.example.note.controller.NoteManager;
-import com.example.note.db.AppDatabase;
-import com.example.note.db.DatabaseHelper;
-import com.example.note.db.GetNotesTask;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.room.Room;
-
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.DatePicker;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.example.note.controller.NoteManager;
+import com.example.note.db.DatabaseHelper;
+import com.example.note.db.GetNotesTask;
 
 import java.io.File;
 import java.util.Arrays;
@@ -98,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                             noteManager.importNotes(file);
                         }
                     }
+
                 }
             }).show();
         }
