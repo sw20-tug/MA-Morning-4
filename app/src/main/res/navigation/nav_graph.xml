@@ -14,6 +14,10 @@
         <action
             android:id="@+id/action_overview_to_detail_fragment"
             app:destination="@id/NoteDetailFragment" />
+
+        <action
+            android:id="@+id/action_overview_to_done_overview_fragment"
+            app:destination="@id/DoneNoteOverviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/NoteDetailFragment"
@@ -23,6 +27,17 @@
 
         <action
             android:id="@+id/action_detail_to_overview_fragment"
+            app:destination="@id/NoteOverviewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DoneNoteOverviewFragment"
+        android:name="com.example.note.fragments.DoneNotesOverviewFragment"
+        android:label="Done Notes Overview"
+        tools:layout="@layout/done_notes_overview_fragment">
+
+        <action
+            android:id="@+id/action_done_overview_to_overview_fragment"
             app:destination="@id/NoteOverviewFragment" />
     </fragment>
 </navigation>

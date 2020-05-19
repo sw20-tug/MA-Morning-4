@@ -42,4 +42,14 @@
         fab:layout_constraintEnd_toEndOf="parent"
         fab:pressedTranslationZ="12dp" />
 
+    <Button
+        android:id="@+id/show_done_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/completed_notes"
+        fab:layout_constraintBottom_toBottomOf="parent"
+        fab:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

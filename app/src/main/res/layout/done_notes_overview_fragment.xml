@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/done_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/completed_notes"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/overview_done_notes_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="674dp"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toBottomOf="@+id/done_notes"></ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/overview_back_all_notes_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dip"
+        android:layout_marginStart="335dp"
+        android:tint="@color/white"
+        fab:backgroundTint="@color/colorPrimary"
+        fab:elevation="6dp"
+        fab:fabSize="normal"
+        fab:layout_constraintBottom_toBottomOf="parent"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:pressedTranslationZ="12dp"
+        fab:srcCompat="@android:drawable/ic_menu_revert" />
+</androidx.constraintlayout.widget.ConstraintLayout>

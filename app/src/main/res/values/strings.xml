@@ -18,5 +18,9 @@
     <string name="list_overview_header">Pinned</string>
     <string name="done">Done</string>
     <string name="last_modification">Last Modification</string>
+    <string name="show_done_notes">Show Done Notes</string>
+    <string name="show_all_notes">Show All Notes</string>
+    <string name="completed_notes">Completed Notes</string>
+    <string name="completed_timestamp">Completed Timestamp</string>
 </resources>
 

@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }).show();
         }
+
         return super.onOptionsItemSelected(item);
     }
 }
