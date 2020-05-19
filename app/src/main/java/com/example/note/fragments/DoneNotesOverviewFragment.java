@@ -16,7 +16,7 @@ public class DoneNotesOverviewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.overview_done_notes_fragment, container, false);
+        View view = inflater.inflate(R.layout.done_notes_overview_fragment, container, false);
 
         FloatingActionButton back_all_notes_btn = view.findViewById(R.id.overview_back_all_notes_btn);
         back_all_notes_btn.setOnClickListener(new View.OnClickListener() {

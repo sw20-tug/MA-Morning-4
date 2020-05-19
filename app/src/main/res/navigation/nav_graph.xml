@@ -34,7 +34,7 @@
         android:id="@+id/DoneNoteOverviewFragment"
         android:name="com.example.note.fragments.DoneNotesOverviewFragment"
         android:label="Done Notes Overview"
-        tools:layout="@layout/overview_done_notes_fragment">
+        tools:layout="@layout/done_notes_overview_fragment">
 
         <action
             android:id="@+id/action_done_overview_to_overview_fragment"
