@@ -22,7 +22,9 @@ import com.example.note.model.Note;
 import com.example.note.model.NoteComparator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -111,8 +113,58 @@ public class NoteOverviewFragment extends Fragment {
         else if (id == R.id.filter) {
             showFilterDialog();
             return true;
+        } else if (id == R.id.action_empty_notes) {
+            new AlertDialog.Builder(this.getContext())
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Empty Notes")
+                    .setMessage("Are you sure you want to delete all stored notes?")
+                    .setNegativeButton("No", null)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mNoteManager.emptyNotes();
+                            updateNotes();
+                        }
+                    })
+                    .show();
+            return true;
+        } else if (id == R.id.action_export_notes) {
+            mNoteManager.exportNotes(this.getContext());
+            Toast.makeText(this.getContext(), "Stored Notes to Device", Toast.LENGTH_LONG).show();
+            mAdapter.notifyDataSetChanged();
+            return true;
+        } else if (id == R.id.action_import_notes) {
+            File dir = this.getContext().getFilesDir();
+
+            final String[] files = dir.list();
+            Arrays.sort(files, Collections.reverseOrder());
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setTitle("Select File");
+            builder.setItems(files, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    String fileName = files[i];
+                    for(File file : getActivity().getApplicationContext().getFilesDir().listFiles()) {
+                        if (file.getName().equals(fileName)) {
+                            mNoteManager.importNotes(file);
+                            updateNotes();
+                        }
+                    }
+                }
+            }).show();
+
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateNotes() {
+        List<Note> newNotes = mNoteManager.getNotes();
+        mAllNotes.clear();
+        mAllNotes.addAll(newNotes);
+        sortNotesList("Date");
+        mAdapter.notifyDataSetChanged();
     }
 
     public void sortNotesList(String categorie) {
