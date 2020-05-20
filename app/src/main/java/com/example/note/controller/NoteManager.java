@@ -109,7 +109,7 @@ public class NoteManager extends Observable {
         try{
             Scanner inputStream = new Scanner(file);
             while(inputStream.hasNext()) {
-                String data = inputStream.next();
+                String data = inputStream.nextLine();
                 lines.add(Arrays.asList(data.split(",")));
             }
             inputStream.close();
