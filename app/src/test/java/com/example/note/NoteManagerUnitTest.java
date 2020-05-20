@@ -295,6 +295,38 @@ public class NoteManagerUnitTest {
 
     @Test
     public void importDataTest() {
+        NoteManager noteManager = NoteManager.getInstance();
+        int result = 0;
+        noteManager.emptyNotes();
+
+        // Create data
+        result = noteManager.addNote("note1", "first note", "");
+        assert(result == 0);
+        result = noteManager.addNote("note2", "second note", "taggy-tag");
+        assert(result == 0);
+        result = noteManager.addNote("note3", "third note", "");
+        assert(result == 0);
+        result = noteManager.addNote("note4", "fourth note", "tag");
+        assert(result == 0);
+
+        List<Note> copiedNotes = noteManager.getNotes();
+        noteManager.exportNotes(mockContext);
+
+        // now delete all notes to import them again
+        noteManager.emptyNotes();
+
+        assert(noteManager.getNotes().size() == 0);
+
+        //import them again
+        File[] files = mockContext.getFilesDir().listFiles();
+        assert (files.length == 1);
+        File file = files[0];
+
+        noteManager.importNotes(file);
+
+        assert(noteManager.getNotes().size() == copiedNotes.size());
+        assertEquals(noteManager.getNotes(), copiedNotes);
+
         assert(true);
     }
 
