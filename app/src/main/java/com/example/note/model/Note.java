@@ -57,10 +57,11 @@ public class Note implements Comparable<Note> {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.tag = tag;
         this.creationTimestamp = creationTimestamp;
         this.lastModification = lastModification;
         this.pinned = pinned;
-        this.markedAsDone = false;
+        this.markedAsDone = done;
         this.completionTimestamp = 0L;
     }
 

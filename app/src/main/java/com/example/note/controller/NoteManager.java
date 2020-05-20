@@ -12,8 +12,10 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
@@ -52,19 +54,22 @@ public class NoteManager extends Observable {
         return 0;
     }
 
-    public int addNote(String title, String content, String tag, String sCreationTimestamp, String sLastModification, boolean pinned) {
+    public int addNote(String title, String content, String tag, String sCreationTimestamp, String sLastModification, String sPinned, String sDone) {
         title = title.substring(1, title.length()-1);
         content = content.substring(1, content.length()-1);
         sCreationTimestamp = sCreationTimestamp.substring(1, sCreationTimestamp.length()-1);
         sLastModification = sLastModification.substring(1, sLastModification.length()-1);
+        tag = tag.substring(1, tag.length()-1);
         Long creationTimestamp = Long.parseLong(sCreationTimestamp);
         Long lastModification = Long.parseLong(sLastModification);
+        boolean pinned = Boolean.parseBoolean(sPinned.substring(1, sPinned.length()-1));
+        boolean done = Boolean.parseBoolean(sDone.substring(1, sDone.length()-1));
 
         if(title == null || title.length() < 3) {
             return -1;
         }
 
-        final Note note = new Note(getNextFreeId(), title, content, tag, creationTimestamp, lastModification, pinned, false, 0);
+        final Note note = new Note(getNextFreeId(), title, content, tag, creationTimestamp, lastModification, pinned, done, 0);
         notes.add(note);
         new InsertNotesTask().execute(note);
         return 0;
@@ -120,7 +125,8 @@ public class NoteManager extends Observable {
                         lines.get(i).get(2),
                         lines.get(i).get(3),
                         lines.get(i).get(4),
-                        lines.get(i).get(5) == "True");
+                        lines.get(i).get(5),
+                        lines.get(i).get(6));
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -128,9 +134,11 @@ public class NoteManager extends Observable {
     }
 
     public void exportNotes(Context context) {
-        String fileName = "export_" + System.currentTimeMillis();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        String fileName = "export_" + formatter.format(date);
         List<String[]> content = new ArrayList<String[]>();
-        content.add(new String[] {"Title", "Content", "Tag", "creationTimestamp", "lastModification", "Pinned"});
+        content.add(new String[] {"Title", "Content", "Tag", "creationTimestamp", "lastModification", "Pinned", "Done"});
 
         for(Note note : getNotes()) {
             content.add(new String[] {note.getTitle(),
@@ -138,7 +146,8 @@ public class NoteManager extends Observable {
                     note.getTag(),
                     note.getCreationTimestamp().toString(),
                     note.getLastModification().toString(),
-                    note.isPinned() ? "True" : "False"});
+                    note.isPinned() ? "True" : "False",
+                    note.isMarkedAsDone() ? "True" : "False"});
         }
 
         writeFileToStorage(context, fileName, content);
@@ -146,7 +155,7 @@ public class NoteManager extends Observable {
     }
 
     public void writeFileToStorage(Context context, String fileName, List<String[]> content) {
-        File file = new File(context.getFilesDir(),"export_" + System.currentTimeMillis() + ".csv");
+        File file = new File(context.getFilesDir(),fileName + ".csv");
 
         try {
             FileWriter outputFile = new FileWriter(file);

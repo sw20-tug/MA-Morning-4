@@ -20,12 +20,8 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_export_notes"
-        android:orderInCategory="100"
-        android:title="@string/action_export_notes"
-        app:showAsAction="never" />
+        android:title="@string/action_export_notes" />
     <item
         android:id="@+id/action_import_notes"
-        android:orderInCategory="100"
-        android:title="@string/action_import_notes"
-        app:showAsAction="never" />
+        android:title="@string/action_import_notes" />
 </menu>
