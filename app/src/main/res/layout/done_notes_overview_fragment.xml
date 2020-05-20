@@ -7,6 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/removeFilterBtn"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@color/colorAccent"
+        android:text="@string/remove_filter"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        fab:layout_constraintEnd_toEndOf="parent"
+        fab:layout_constraintStart_toStartOf="parent"
+        fab:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/done_notes"
         android:layout_width="wrap_content"
@@ -21,11 +33,11 @@
     <ListView
         android:id="@+id/overview_done_notes_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="674dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
         fab:layout_constraintEnd_toEndOf="parent"
         fab:layout_constraintStart_toStartOf="parent"
-        fab:layout_constraintTop_toBottomOf="@+id/done_notes"></ListView>
+        fab:layout_constraintTop_toBottomOf="@+id/done_notes"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/overview_back_all_notes_btn"
