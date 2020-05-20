@@ -37,6 +37,10 @@
         tools:layout="@layout/done_notes_overview_fragment">
 
         <action
+            android:id="@+id/action_done_notes_overview_to_detail_fragment"
+            app:destination="@id/NoteDetailFragment" />
+
+        <action
             android:id="@+id/action_done_overview_to_overview_fragment"
             app:destination="@id/NoteOverviewFragment" />
     </fragment>

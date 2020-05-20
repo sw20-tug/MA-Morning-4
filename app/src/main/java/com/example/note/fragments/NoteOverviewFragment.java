@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -83,9 +82,6 @@ public class NoteOverviewFragment extends Fragment {
         show_done_notes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Showing Completed Notes",
-                        Toast.LENGTH_LONG).show();
-
                 NavHostFragment.findNavController(NoteOverviewFragment.this)
                         .navigate(R.id.action_overview_to_done_overview_fragment);
             }

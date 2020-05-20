@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         fab:layout_constraintEnd_toEndOf="parent"
         fab:layout_constraintStart_toStartOf="parent"
-        fab:layout_constraintTop_toBottomOf="@+id/removeFilterBtn"></ListView>
+        fab:layout_constraintTop_toBottomOf="@+id/removeFilterBtn"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/overview_new_note_btn"
