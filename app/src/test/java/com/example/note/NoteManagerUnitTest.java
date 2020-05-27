@@ -238,6 +238,15 @@ public class NoteManagerUnitTest {
     /************ Import/Export Test **************/
 
     @Test
+    public void noExportWithNoNotesTest() {
+        NoteManager noteManager = NoteManager.getInstance();
+        assertEquals(noteManager.getNotes().size(), 0);
+
+        int result = noteManager.exportNotes(mockContext);
+        assertEquals(result, -1);
+    }
+
+    @Test
     public void exportDataTest() {
         NoteManager noteManager = NoteManager.getInstance();
         int result = 0;
@@ -253,7 +262,8 @@ public class NoteManagerUnitTest {
         assert(result == 0);
 
         // export the notes
-        noteManager.exportNotes(mockContext);
+        result = noteManager.exportNotes(mockContext);
+        assertEquals(result, 0);
         File[] files = mockContext.getFilesDir().listFiles();
         assert (files.length == 1);
         File file = files[0];
@@ -306,7 +316,7 @@ public class NoteManagerUnitTest {
         assert(result == 0);
         result = noteManager.addNote("note3", "third note", "");
         assert(result == 0);
-        result = noteManager.addNote("note4", "fourth note", "tag");
+        result = noteManager.addNote("note4", "fourth note, semicolon detected", "tag");
         assert(result == 0);
 
         List<Note> copiedNotes = noteManager.getNotes();

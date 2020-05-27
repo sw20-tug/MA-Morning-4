@@ -131,7 +131,10 @@ public class NoteManager extends Observable {
         }
     }
 
-    public void exportNotes(Context context) {
+    public int exportNotes(Context context) {
+        if(getNotes().size() == 0) {
+            return -1;
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         String fileName = "export_" + formatter.format(date);
@@ -149,7 +152,7 @@ public class NoteManager extends Observable {
         }
 
         writeFileToStorage(context, fileName, content);
-
+        return 0;
     }
 
     public void writeFileToStorage(Context context, String fileName, List<String[]> content) {

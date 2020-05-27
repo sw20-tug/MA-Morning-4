@@ -130,13 +130,13 @@ public class NoteOverviewFragment extends Fragment {
                     .show();
             return true;
         } else if (id == R.id.action_export_notes) {
-            if(mNoteManager.getNotes().size() == 0) {
+            int result = mNoteManager.exportNotes(this.getContext());
+            if (result == 0) {
+                Toast.makeText(this.getContext(), "Stored Notes to Device", Toast.LENGTH_LONG).show();
+                mAdapter.notifyDataSetChanged();
+            } else {
                 Toast.makeText(this.getContext(), "No Notes to export!", Toast.LENGTH_LONG).show();
-                return true;
             }
-            mNoteManager.exportNotes(this.getContext());
-            Toast.makeText(this.getContext(), "Stored Notes to Device", Toast.LENGTH_LONG).show();
-            mAdapter.notifyDataSetChanged();
             return true;
         } else if (id == R.id.action_import_notes) {
             File dir = this.getContext().getFilesDir();
