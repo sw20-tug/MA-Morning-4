@@ -130,6 +130,10 @@ public class NoteOverviewFragment extends Fragment {
                     .show();
             return true;
         } else if (id == R.id.action_export_notes) {
+            if(mNoteManager.getNotes().size() == 0) {
+                Toast.makeText(this.getContext(), "No Notes to export!", Toast.LENGTH_LONG).show();
+                return true;
+            }
             mNoteManager.exportNotes(this.getContext());
             Toast.makeText(this.getContext(), "Stored Notes to Device", Toast.LENGTH_LONG).show();
             mAdapter.notifyDataSetChanged();

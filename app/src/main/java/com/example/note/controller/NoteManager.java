@@ -55,11 +55,8 @@ public class NoteManager extends Observable {
     }
 
     public int addNote(String title, String content, String tag, String sCreationTimestamp, String sLastModification, String sPinned, String sDone) {
-        title = title.substring(1, title.length()-1);
-        content = content.substring(1, content.length()-1);
         sCreationTimestamp = sCreationTimestamp.substring(1, sCreationTimestamp.length()-1);
         sLastModification = sLastModification.substring(1, sLastModification.length()-1);
-        tag = tag.substring(1, tag.length()-1);
         Long creationTimestamp = Long.parseLong(sCreationTimestamp);
         Long lastModification = Long.parseLong(sLastModification);
         boolean pinned = Boolean.parseBoolean(sPinned.substring(1, sPinned.length()-1));
@@ -115,7 +112,8 @@ public class NoteManager extends Observable {
             Scanner inputStream = new Scanner(file);
             while(inputStream.hasNext()) {
                 String data = inputStream.nextLine();
-                lines.add(Arrays.asList(data.split(",")));
+                data = data.substring(1, data.length()-1);
+                lines.add(Arrays.asList(data.split("\",\"")));
             }
             inputStream.close();
 
