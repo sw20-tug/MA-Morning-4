@@ -87,7 +87,9 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Actions");
 
-                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note", "Delete Note", "Delete Tag", (!note.isMarkedAsDone()) ? "Mark Note as done" : "Unmark Note as done"};
+                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note",
+                        "Delete Note", "Delete Tag", (!note.isMarkedAsDone()) ? "Mark Note as done"
+                        : "Unmark Note as done", "Send via e-mail"};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -146,6 +148,10 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                                 mNoteManager.updateNote(note, false);
                                 ((NoteOverviewFragment) currentFragment).sortNotesList("Date");
                                 notifyDataSetChanged();
+                                break;
+
+                            case 5:
+                                mNoteManager.sendNoteViaEmail(context, note);
                                 break;
                         }
                     }
