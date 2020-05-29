@@ -1,6 +1,7 @@
 package com.example.note.controller;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.example.note.db.DeleteNotesTask;
 import com.example.note.db.EmptyNotesTableTask;
@@ -176,5 +177,22 @@ public class NoteManager extends Observable {
         Note note = getNoteById(i);
         note.setTag("");
         updateNote(note, true);
+    }
+
+    public void sendNoteViaEmail(Context context, Note note){
+        String subject = "Note: " + note.getTitle();
+        String content = "Here is the note I was talking about:\n" +
+                "\nTitle: " + note.getTitle() +
+                "\n\nContent: " + note.getContent() +
+                "\n\nTag: " + note.getTag();
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, content);
+
+        //only opens clients that can deal with e-mails
+        intent.setType("message/rfc882");
+
+        context.startActivity(Intent.createChooser(intent, "Choose client: "));
     }
 }
