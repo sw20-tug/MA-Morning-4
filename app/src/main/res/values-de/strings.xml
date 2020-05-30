@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">NOTE</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_empty_notes">Notiz leeren</string>
+    <string name="action_export_notes">Notiz exportieren</string>
+    <string name="action_import_notes">Notiz importieren</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="note_overview_fragment_label">Notiz Übersicht</string>
+    <string name="note_detail_fragment_label">Notiz Detail</string>
+
+    <string name="title">Titel</string>
+    <string name="description">Beschreibung</string>
+    <string name="btn_save">Speichern</string>
+    <string name="tag">Tag</string>
+    <string name="sort">Sortieren</string>
+    <string name="filter">Filter</string>
+    <string name="remove_filter">Filter entfernen</string>
+    <string name="list_overview_header">Pinned</string>
+    <string name="done">Erledigt</string>
+    <string name="last_modification">Letzte Änderung</string>
+    <string name="show_done_notes">Zeige erledigte Notizen</string>
+    <string name="show_all_notes">Zeige alle Notizen</string>
+    <string name="completed_notes">Fertiggestellte Notizen</string>
+    <string name="completed_timestamp">Fertiggestellte Zeitstempel</string>
+</resources>
+
