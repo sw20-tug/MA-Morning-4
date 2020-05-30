@@ -22,5 +22,6 @@
     <string name="show_all_notes">Afficher toutes les notes</string>
     <string name="completed_notes">Notes complétées</string>
     <string name="completed_timestamp">Horodatage terminé</string>
+    <string name="No">No</string>
 </resources>
 

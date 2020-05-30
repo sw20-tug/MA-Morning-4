@@ -22,5 +22,25 @@
     <string name="show_all_notes">Zeige alle Notizen</string>
     <string name="completed_notes">Fertiggestellte Notizen</string>
     <string name="completed_timestamp">Fertiggestellte Zeitstempel</string>
+    <string name="delete_note">Notiz löschen</string>
+    <string name="delete_confirmation">"Soll die Notiz gelöscht werden: "</string>
+    <string name="No">Nein</string>
+    <string name="Yes">Ja</string>
+    <string name="delete_tag">Tags löschen</string>
+    <string name="tag_deletition_confirmation">"Soll das Tag gelöscht werden: "</string>
+    <string name="pin_note">Notiz pinnen</string>
+    <string name="unpin_note">Notiz unpinnen</string>
+    <string name="edit_note">Notiz ändern</string>
+    <string name="mark_as_done">Notiz als erledigt markieren</string>
+    <string name="unmark_as_done">Notiz als unerledigt markieren</string>
+    <string name="date">Datum</string>
+    <string name="Cancel">Abbrechen</string>
+    <string name="delete_all_tags_confirmation">Wollen sie alle Notizen löschen?</string>
+    <string name="stored_notes_to_device">Notizen gespeichert</string>
+    <string name="no_notes_to_export">Keine Notizen zu Exportieren</string>
+    <string name="title_desc">Titel absteigend</string>
+    <string name="date_desc">Datum absteigend</string>
+    <string name="select_file">Datei auswählen</string>
+    <string name="sort_notes">Notizen sortieren</string>
 </resources>
 

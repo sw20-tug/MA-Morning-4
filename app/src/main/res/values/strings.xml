@@ -22,5 +22,26 @@
     <string name="show_all_notes">Show All Notes</string>
     <string name="completed_notes">Completed Notes</string>
     <string name="completed_timestamp">Completed Timestamp</string>
+    <string name="delete_note">Delete Note</string>
+    <string name="delete_confirmation">Are you sure you want to delete note</string>
+    <string name="No">No</string>
+    <string name="Yes">Yes</string>
+    <string name="delete_tag">Delete Tags</string>
+    <string name="tag_deletition_confirmation">Are you sure you want to delete the Tags</string>
+    <string name="pin_note">Pin Note</string>
+    <string name="unpin_note">Unpin Note</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="mark_as_done">Mark Note as done</string>
+    <string name="unmark_as_done">Unmark Note as done</string>
+    <string name="send_via_email">Send via e-mail</string>
+    <string name="date">date</string>
+    <string name="Cancel">Cancel</string>
+    <string name="delete_all_tags_confirmation">Are you sure you want to delete all stored notes?</string>
+    <string name="stored_notes_to_device">Stored Notes to Device</string>
+    <string name="no_notes_to_export">No Notes to export!</string>
+    <string name="title_desc">Title desc</string>
+    <string name="date_desc">Date desc</string>
+    <string name="select_file">Select File</string>
+    <string name="sort_notes">Sort Notes</string>
 </resources>
 

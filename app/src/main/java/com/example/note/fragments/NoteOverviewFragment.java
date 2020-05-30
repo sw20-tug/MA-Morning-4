@@ -90,7 +90,7 @@ public class NoteOverviewFragment extends Fragment {
             }
         });
 
-        sortNotesList("Date");
+        sortNotesList(getActivity().getString(R.string.date));
         mAdapter.notifyDataSetChanged();
         return view;
     }
@@ -117,10 +117,10 @@ public class NoteOverviewFragment extends Fragment {
         } else if (id == R.id.action_empty_notes) {
             new AlertDialog.Builder(this.getContext())
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("Empty Notes")
-                    .setMessage("Are you sure you want to delete all stored notes?")
-                    .setNegativeButton("No", null)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    .setTitle(R.string.action_empty_notes)
+                    .setMessage(R.string.delete_all_tags_confirmation)
+                    .setNegativeButton(R.string.No, null)
+                    .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             mNoteManager.emptyNotes();
@@ -132,10 +132,10 @@ public class NoteOverviewFragment extends Fragment {
         } else if (id == R.id.action_export_notes) {
             int result = mNoteManager.exportNotes(this.getContext());
             if (result == 0) {
-                Toast.makeText(this.getContext(), "Stored Notes to Device", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), R.string.stored_notes_to_device, Toast.LENGTH_LONG).show();
                 mAdapter.notifyDataSetChanged();
             } else {
-                Toast.makeText(this.getContext(), "No Notes to export!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), R.string.no_notes_to_export, Toast.LENGTH_LONG).show();
             }
             return true;
         } else if (id == R.id.action_import_notes) {
@@ -145,7 +145,7 @@ public class NoteOverviewFragment extends Fragment {
             Arrays.sort(files, Collections.reverseOrder());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-            builder.setTitle("Select File");
+            builder.setTitle(getActivity().getString(R.string.select_file));
             builder.setItems(files, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -168,30 +168,33 @@ public class NoteOverviewFragment extends Fragment {
         List<Note> newNotes = mNoteManager.getNotes();
         mAllNotes.clear();
         mAllNotes.addAll(newNotes);
-        sortNotesList("Date");
+        sortNotesList(getActivity().getString(R.string.date));
         mAdapter.notifyDataSetChanged();
     }
 
     public void sortNotesList(String categorie) {
-        if(categorie.equals("Title") || categorie.equals("Date"))
+        if(categorie.equals(R.string.title) || categorie.equals(getActivity().getString(R.string.date)))
             Collections.sort(mAllNotes, new NoteComparator(categorie));
-        else if(categorie.equals("Title desc") || categorie.equals("Date desc"))
+        else if(categorie.equals(R.string.title_desc) || categorie.equals(R.string.date_desc))
             Collections.sort(mAllNotes, new NoteComparator(categorie).reversed());
         mAdapter.notifyDataSetChanged();
     }
 
     private void showSortDialog() {
-        final CharSequence[] items = {"Title", "Title desc", "Date", "Date desc"};
+        final CharSequence[] items = {getActivity().getString(R.string.title),
+                getActivity().getString(R.string.title_desc),
+                getActivity().getString(R.string.date),
+                getActivity().getString(R.string.date_desc)};
         new AlertDialog.Builder(NoteOverviewFragment.super.getContext())
-                .setTitle("Sort Notes")
+                .setTitle(R.string.sort_notes)
                 .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 })
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                .setNegativeButton(R.string.Cancel, null)
+                .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
