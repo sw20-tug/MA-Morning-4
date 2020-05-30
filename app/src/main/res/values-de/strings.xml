@@ -42,5 +42,6 @@
     <string name="date_desc">Datum absteigend</string>
     <string name="select_file">Datei auswählen</string>
     <string name="sort_notes">Notizen sortieren</string>
+    <string name="send_via_email">via E-mail senden</string>
 </resources>
 
