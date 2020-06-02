@@ -22,8 +22,8 @@
     <string name="show_all_notes">Afficher toutes les notes</string>
     <string name="completed_notes">Notes complétées</string>
     <string name="completed_timestamp">Horodatage terminé</string>
-    <string name="No">No</string>
-    <string name="delete_note">supprimer la note</string>
+    <string name="No">Non</string>
+    <string name="delete_note">Supprimer la note</string>
     <string name="delete_confirmation">Voulez-vous vraiment supprimer la note</string>
     <string name="Yes">Oui</string>
     <string name="delete_tag">Supprimer les balises</string>
@@ -43,5 +43,8 @@
     <string name="date_desc">Date desc</string>
     <string name="select_file">Choisir le dossier</string>
     <string name="sort_notes">Trier les notes</string>
+    <string name="change_language">Changer de langue</string>
+    <string name="action_language_settings">Langue</string>
+    <string name="next_startup_language_change">Au prochain démarrage, la langue sera modifiée</string>
 </resources>
 

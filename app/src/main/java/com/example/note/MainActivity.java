@@ -1,5 +1,7 @@
 package com.example.note;
 
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,10 +12,26 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.note.db.DatabaseHelper;
 import com.example.note.db.GetNotesTask;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String lang = "en";
+        SharedPreferences sharedPreferences = getSharedPreferences("language", MODE_PRIVATE);
+        if (sharedPreferences != null)
+        {
+            String language = sharedPreferences.getString("language", "en");
+            lang = language;
+        }
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
         DatabaseHelper.getInstance().initDb(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

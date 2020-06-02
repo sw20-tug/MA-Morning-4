@@ -3,6 +3,7 @@ package com.example.note.fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class NoteOverviewFragment extends Fragment {
 
@@ -159,6 +162,79 @@ public class NoteOverviewFragment extends Fragment {
                 }
             }).show();
 
+            return true;
+        } else if (id == R.id.action_language_settings) {
+            String[] items = {"English","German","France"};
+            // select correct value
+            int checkedItem = 0;
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences("language", MODE_PRIVATE);
+            if (sharedPreferences != null)
+            {
+                String language = sharedPreferences.getString("language", "en1");
+                if (language.equals("en"))
+                    checkedItem = 0;
+                else if (language.equals("de"))
+                    checkedItem = 1;
+                else if (language.equals("fra"))
+                    checkedItem = 2;
+            }
+            new AlertDialog.Builder(this.getContext())
+                    .setIcon(android.R.drawable.btn_radio)
+                    .setTitle(R.string.change_language)
+                    //.setMessage(R.string.delete_all_tags_confirmation)
+                    .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            /*SharedPreferences sharedPreferences = getContext().getSharedPreferences("language", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            switch (which) {
+                                case 0:
+                                    editor.putString("language", "en");
+                                    editor.commit();
+                                    break;
+                                case 1:
+                                    editor.putString("language", "de");
+                                    editor.commit();
+                                    break;
+                                case 2:
+                                    editor.putString("language", "fra");
+                                    editor.commit();
+                                    break;
+                            }*/
+                        }
+                    })
+                    .setNegativeButton(R.string.No, null)
+                    .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ListView lw = ((AlertDialog)dialog).getListView();
+                            int i = lw.getCheckedItemPosition();
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences("language", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            switch (i) {
+                                case 0:
+                                    editor.putString("language", "en");
+                                    editor.commit();
+                                    break;
+                                case 1:
+                                    editor.putString("language", "de");
+                                    editor.commit();
+                                    break;
+                                case 2:
+                                    editor.putString("language", "fra");
+                                    editor.commit();
+                                    break;
+                                default:
+                                    return;
+                            }
+                            new AlertDialog.Builder(NoteOverviewFragment.super.getContext())
+                                    .setTitle(R.string.next_startup_language_change)
+                                    .setPositiveButton(R.string.Yes, null)
+                                    .show();
+                        }
+                    })
+                    .show();
             return true;
         }
         return super.onOptionsItemSelected(item);

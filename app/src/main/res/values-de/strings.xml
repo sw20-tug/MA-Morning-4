@@ -42,6 +42,9 @@
     <string name="date_desc">Datum absteigend</string>
     <string name="select_file">Datei auswählen</string>
     <string name="sort_notes">Notizen sortieren</string>
-    <string name="send_via_email">via E-mail senden</string>
+    <string name="change_language">Sprache ändern</string>
+    <string name="send_via_email">via E-Mail senden</string>
+    <string name="action_language_settings">Sprache</string>
+    <string name="next_startup_language_change">Beim nächsten Start wird die Sprache geändert</string>
 </resources>
 

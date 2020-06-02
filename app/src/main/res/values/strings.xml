@@ -34,7 +34,7 @@
     <string name="mark_as_done">Mark Note as done</string>
     <string name="unmark_as_done">Unmark Note as done</string>
     <string name="send_via_email">Send via e-mail</string>
-    <string name="date">date</string>
+    <string name="date">Date</string>
     <string name="Cancel">Cancel</string>
     <string name="delete_all_tags_confirmation">Are you sure you want to delete all stored notes?</string>
     <string name="stored_notes_to_device">Stored Notes to Device</string>
@@ -43,5 +43,8 @@
     <string name="date_desc">Date desc</string>
     <string name="select_file">Select File</string>
     <string name="sort_notes">Sort Notes</string>
+    <string name="change_language">Change Language</string>
+    <string name="action_language_settings">Language</string>
+    <string name="next_startup_language_change">On next startup the language will be changed</string>
 </resources>
 
