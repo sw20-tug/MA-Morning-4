@@ -87,9 +87,15 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Actions");
 
-                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note",
-                        "Delete Note", "Delete Tag", (!note.isMarkedAsDone()) ? "Mark Note as done"
-                        : "Unmark Note as done", "Send via e-mail"};
+                String[] actions = {(!note.isPinned()) ? rowView.getResources().getString(R.string.pin_note)
+                        : rowView.getResources().getString(R.string.pin_note),
+                        rowView.getResources().getString(R.string.edit_note),
+                        rowView.getResources().getString(R.string.delete_note),
+                        rowView.getResources().getString(R.string.delete_tag),
+                        (!note.isMarkedAsDone())
+                                ? rowView.getResources().getString(R.string.mark_as_done)
+                        : rowView.getResources().getString(R.string.unmark_as_done),
+                        rowView.getResources().getString(R.string.send_via_email)};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -97,7 +103,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                             case 0:
                                 note.setPinned(!note.isPinned());
                                 mNoteManager.updateNote(note, false);
-                                ((NoteOverviewFragment) currentFragment).sortNotesList("Date");
+                                ((NoteOverviewFragment) currentFragment).sortNotesList(rowView.getResources().getString(R.string.date));
                                 notifyDataSetChanged();
                                 break;
                             case 1:
@@ -109,10 +115,10 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                             case 2:
                                 new AlertDialog.Builder(context)
                                         .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .setTitle("Delete Note")
-                                        .setMessage("Are you sure you want to delete note " +note.getTitle() + " ?")
-                                        .setNegativeButton("No", null)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        .setTitle(rowView.getResources().getString(R.string.delete_note))
+                                        .setMessage(rowView.getResources().getString(R.string.delete_confirmation) +note.getTitle() + " ?")
+                                        .setNegativeButton(rowView.getResources().getString(R.string.No), null)
+                                        .setPositiveButton(rowView.getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mNoteManager.deleteNote(note);
@@ -125,10 +131,10 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                             case 3:
                                 new AlertDialog.Builder(context)
                                         .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .setTitle("Delete Tag")
-                                        .setMessage("Are you sure you want to delete the Tags " +note.getTag() + " ?")
-                                        .setNegativeButton("No", null)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        .setTitle(rowView.getResources().getString(R.string.delete_tag))
+                                        .setMessage(rowView.getResources().getString(R.string.tag_deletition_confirmation) +note.getTag() + " ?")
+                                        .setNegativeButton(rowView.getResources().getString(R.string.No), null)
+                                        .setPositiveButton(rowView.getResources().getString(R.string.Yes), new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mNoteManager.deleteTagOfNote(note.getId());
@@ -146,7 +152,7 @@ public class NoteOverviewAdapter extends ArrayAdapter<Note> implements Observer 
                                     note.setCompletionTimestamp(0L);
 
                                 mNoteManager.updateNote(note, false);
-                                ((NoteOverviewFragment) currentFragment).sortNotesList("Date");
+                                ((NoteOverviewFragment) currentFragment).sortNotesList(rowView.getResources().getString(R.string.date));
                                 notifyDataSetChanged();
                                 break;
 

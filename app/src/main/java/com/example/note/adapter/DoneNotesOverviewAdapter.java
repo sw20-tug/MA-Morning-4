@@ -99,9 +99,14 @@ public class DoneNotesOverviewAdapter extends ArrayAdapter<Note> implements Obse
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Actions");
 
-                String[] actions = {(!note.isPinned()) ? "Pin Note" : "Unpin Note", "Edit Note",
-                        "Delete Note", "Delete Tag", (!note.isMarkedAsDone()) ? "Mark Note as done"
-                        : "Unmark Note as done", "Send via e-mail"};
+                String[] actions = {(!note.isPinned()) ? rowView.getResources().getString(R.string.pin_note)
+                        : rowView.getResources().getString(R.string.unpin_note),
+                        rowView.getResources().getString(R.string.edit_note),
+                        rowView.getResources().getString(R.string.delete_note),
+                        rowView.getResources().getString(R.string.delete_tag),
+                        (!note.isMarkedAsDone()) ? rowView.getResources().getString(R.string.mark_as_done)
+                        : rowView.getResources().getString(R.string.unmark_as_done),
+                        rowView.getResources().getString(R.string.send_via_email)};
                 builder.setItems(actions, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -109,7 +114,7 @@ public class DoneNotesOverviewAdapter extends ArrayAdapter<Note> implements Obse
                             case 0:
                                 note.setPinned(!note.isPinned());
                                 mNoteManager.updateNote(note, false);
-                                ((DoneNotesOverviewFragment) currentFragment).sortNotesList("Date");
+                                ((DoneNotesOverviewFragment) currentFragment).sortNotesList(rowView.getResources().getString(R.string.date));
                                 notifyDataSetChanged();
                                 break;
                             case 1:
@@ -121,10 +126,10 @@ public class DoneNotesOverviewAdapter extends ArrayAdapter<Note> implements Obse
                             case 2:
                                 new AlertDialog.Builder(context)
                                         .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .setTitle("Delete Note")
-                                        .setMessage("Are you sure you want to delete note " +note.getTitle() + " ?")
-                                        .setNegativeButton("No", null)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        .setTitle(R.string.delete_note)
+                                        .setMessage(R.string.delete_confirmation +note.getTitle() + " ?")
+                                        .setNegativeButton(R.string.No, null)
+                                        .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mNoteManager.deleteNote(note);
@@ -137,10 +142,10 @@ public class DoneNotesOverviewAdapter extends ArrayAdapter<Note> implements Obse
                             case 3:
                                 new AlertDialog.Builder(context)
                                         .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .setTitle("Delete Tag")
-                                        .setMessage("Are you sure you want to delete the Tags " +note.getTag() + " ?")
-                                        .setNegativeButton("No", null)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        .setTitle(R.string.delete_tag)
+                                        .setMessage(R.string.tag_deletition_confirmation +note.getTag() + " ?")
+                                        .setNegativeButton(R.string.No, null)
+                                        .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mNoteManager.deleteTagOfNote(note.getId());
@@ -160,7 +165,7 @@ public class DoneNotesOverviewAdapter extends ArrayAdapter<Note> implements Obse
                                 }
 
                                 mNoteManager.updateNote(note, false);
-                                ((DoneNotesOverviewFragment) currentFragment).sortNotesList("Date");
+                                ((DoneNotesOverviewFragment) currentFragment).sortNotesList(rowView.getResources().getString(R.string.date));
                                 notifyDataSetChanged();
                                 break;
 
