@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textSize="24sp" />
 
         <View
@@ -37,14 +37,15 @@
             android:background="@color/light_grey"
             android:hint="@string/title"
             android:padding="20dip"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/description"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textSize="24sp" />
 
         <View
@@ -65,14 +66,15 @@
             android:inputType="textMultiLine"
             android:padding="20dip"
             android:scrollHorizontally="false"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tag"
-            android:textColor="@color/black"
+            android:textColor="@color/colorPrimary"
             android:textSize="24sp" />
 
         <View
@@ -93,7 +95,8 @@
             android:inputType="textMultiLine"
             android:padding="20dip"
             android:scrollHorizontally="false"
-            android:textColor="@color/grey"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textSize="16sp" />
 
         <Button
