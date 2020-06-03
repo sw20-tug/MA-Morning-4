@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">NOTE</string>
+    <string name="action_settings">embauche</string>
+    <string name="action_empty_notes">Vider Note</string>
+    <string name="action_export_notes">Exporter Note</string>
+    <string name="action_import_notes">importer Note</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="note_overview_fragment_label">Note Aperçu</string>
+    <string name="note_detail_fragment_label">Note Détail</string>
+
+    <string name="title">Titre</string>
+    <string name="description">Description</string>
+    <string name="btn_save">Sauver</string>
+    <string name="tag">Étiquette</string>
+    <string name="sort">Trier</string>
+    <string name="filter">Filtre</string>
+    <string name="remove_filter">Filtre retirer</string>
+    <string name="list_overview_header">Épinglé</string>
+    <string name="done">terminé</string>
+    <string name="last_modification">Dernière modification</string>
+    <string name="show_done_notes">Afficher les notes terminées</string>
+    <string name="show_all_notes">Afficher toutes les notes</string>
+    <string name="completed_notes">Notes complétées</string>
+    <string name="completed_timestamp">Horodatage terminé</string>
+    <string name="No">Non</string>
+    <string name="delete_note">Supprimer la note</string>
+    <string name="delete_confirmation">Voulez-vous vraiment supprimer la note</string>
+    <string name="Yes">Oui</string>
+    <string name="delete_tag">Supprimer les balises</string>
+    <string name="tag_deletition_confirmation">Voulez-vous vraiment supprimer les balises</string>
+    <string name="pin_note">Note de broche</string>
+    <string name="unpin_note">Détacher la note</string>
+    <string name="edit_note">Note éditée</string>
+    <string name="mark_as_done">Marquer la note comme terminée</string>
+    <string name="unmark_as_done">Décocher la note comme terminée</string>
+    <string name="send_via_email">Envoyer par e-mail</string>
+    <string name="date">Date</string>
+    <string name="Cancel">Annuler</string>
+    <string name="delete_all_tags_confirmation">Voulez-vous vraiment supprimer toutes les notes enregistrées?</string>
+    <string name="stored_notes_to_device">Notes stockées sur l\'appareil</string>
+    <string name="no_notes_to_export">Pas de notes à exporter!</string>
+    <string name="title_desc">Titre desc</string>
+    <string name="date_desc">Date desc</string>
+    <string name="select_file">Choisir le dossier</string>
+    <string name="sort_notes">Trier les notes</string>
+    <string name="change_language">Changer de langue</string>
+    <string name="action_language_settings">Langue</string>
+    <string name="next_startup_language_change">Au prochain démarrage, la langue sera modifiée</string>
+</resources>
+
