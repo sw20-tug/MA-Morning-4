@@ -33,8 +33,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -74,12 +74,6 @@ public class NoteSendMailTest {
         int result = noteManager.addNote(title, content, tag);
         assertEquals(result, 0);
 
-        String test_subject = "Note: " + tag;
-        String test_content = "Here is the note I was talking about:\n" +
-                "\nTitle: " + tag +
-                "\n\nContent: " + content +
-                "\n\nTag: " + tag;
-
         onView(withId(R.id.show_done_notes))
                 .check(matches(isDisplayed()))
                 .perform(click());
@@ -107,13 +101,6 @@ public class NoteSendMailTest {
                 hasExtra(Intent.EXTRA_TITLE, "Choose client: "),
                 hasExtra(is(Intent.EXTRA_INTENT),
                         hasAction(Intent.ACTION_SEND))));
-
-        /*intended(allOf(hasAction(Intent.ACTION_CHOOSER),
-                hasExtra(is(Intent.EXTRA_INTENT),
-                        allOf( hasAction(Intent.ACTION_SEND),
-                               hasExtra("typ", "message/rfc882")
-                               hasExtra(Intent.EXTRA_SUBJECT, test_subject),
-                               hasExtra(Intent.EXTRA_TEXT, test_content) ))));*/
     }
 
 }

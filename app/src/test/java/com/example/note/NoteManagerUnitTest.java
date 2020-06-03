@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -30,6 +31,7 @@ public class NoteManagerUnitTest {
 
     @Rule
     public TemporaryFolder mTempFolder = new TemporaryFolder();
+    public NoteManager mNoteManager = NoteManager.getInstance();
 
     @Mock
     Context mockContext;
@@ -38,6 +40,25 @@ public class NoteManagerUnitTest {
     public void setUp() throws IOException {
         initMocks(this);
         when(mockContext.getFilesDir()).thenReturn(mTempFolder.newFolder());
+    }
+
+    @Before
+    public void createData() {
+        String title = "Test1";
+        String content = "Hallo, ich bin ein Testnote!";
+        String tag = "";
+        mNoteManager.addNote(title, content, tag);
+    }
+
+    public void createImportExportData() {
+        int result = mNoteManager.addNote("note1", "first note", "");
+        assertEquals(result, 0);
+        result = mNoteManager.addNote("note2", "second note", "taggy-tag");
+        assertEquals(result, 0);
+        result = mNoteManager.addNote("note3", "third note", "");
+        assertEquals(result, 0);
+        result = mNoteManager.addNote("note4", "fourth note, semicolon detected", "tag");
+        assertEquals(result, 0);
     }
 
     @After
@@ -49,7 +70,7 @@ public class NoteManagerUnitTest {
 
     @Test
     public void addNewNoteTest() {
-        Integer id = 1;
+        Integer id = 2;
         String title = "";
         String content = "Hallo, ich bin ein Testnote!";
         String tag = "";
@@ -61,8 +82,8 @@ public class NoteManagerUnitTest {
         title = "ab";
         result = noteManager.addNote(title, content, tag);
         assertEquals(result, -1);
-        assert(noteManager.getNoteById(id) == null);
-        assert(noteManager.getNotes().size() == 0);
+        assertEquals(noteManager.getNoteById(id),null);
+        assert(noteManager.getNotes().size() == 1);
 
         title = "Test1";
         result = noteManager.addNote(title, content, tag);
@@ -76,107 +97,77 @@ public class NoteManagerUnitTest {
     @Test
     public void deleteNoteTest() {
         Integer id = 1;
-        String title = "Test1";
-        String content = "Hallo, ich bin ein Testnote!";
-        String tag = "";
+        mNoteManager.deleteNote(mNoteManager.getNoteById(id));
+        assert(mNoteManager.getNotes().size() == 0);
 
-        NoteManager noteManager = NoteManager.getInstance();
-        int result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
-        noteManager.deleteNote(noteManager.getNoteById(id));
-        assert(noteManager.getNotes().size() == 0);
+        createData();
 
-        result = noteManager.addNote(title, content, tag);
-        assertEquals(noteManager.getNotes().size(), 1);
-
-        Note note = noteManager.getNoteById(3);
-        noteManager.deleteNote(note);
-        assertEquals(noteManager.getNotes().size(), 1);
+        Note note = mNoteManager.getNoteById(3);
+        mNoteManager.deleteNote(note);
+        assertEquals(mNoteManager.getNotes().size(), 1);
     }
 
     @Test
     public void updateNoteTest() {
         Integer id = 1;
-        String title = "Test1";
-        String content = "Hallo, ich bin ein Testnote!";
         String changedContent = "Changed content!";
         String changedTitle = "Test2";
-        String tag = "";
 
-        NoteManager noteManager = NoteManager.getInstance();
-        int result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {
+        mNoteManager.getNoteById(id).setContent(changedContent);
+        mNoteManager.getNoteById(id).setTitle(changedTitle);
+        mNoteManager.getNoteById(id).setLastModification(System.currentTimeMillis());
+        assertEquals(mNoteManager.getNoteById(id).getContent(), changedContent);
+        assertEquals(mNoteManager.getNoteById(id).getTitle(), changedTitle);
+        assertNotEquals(mNoteManager.getNoteById(id).getLastModification().compareTo(mNoteManager.
+                getNoteById(id).getCreationTimestamp()), 0);
 
-        }
-        noteManager.getNoteById(id).setContent(changedContent);
-        noteManager.getNoteById(id).setTitle(changedTitle);
-        noteManager.getNoteById(id).setLastModification(System.currentTimeMillis());
-        assert(noteManager.getNoteById(id).getContent().equals(changedContent));
-        assert(noteManager.getNoteById(id).getTitle().equals(changedTitle));
-        assert(noteManager.getNoteById(id).getLastModification().compareTo(noteManager.
-                getNoteById(id).getCreationTimestamp()) > 0);
+        changedTitle = "note update";
+        changedContent = "me was updated!";
+        String changedTag = "updateTag";
 
-        title = "note update";
-        content = "me was updated!";
-        tag = "updateTag";
-
-        Note note = noteManager.getNoteById(id);
-        note.setTitle(title);
-        note.setContent(content);
-        note.setTag(tag);
-        noteManager.updateNote(note, true);
-        assert(noteManager.getNoteById(id).getTitle() == title);
-        assert(noteManager.getNoteById(id).getContent() == content);
-        assert(noteManager.getNoteById(id).getTag() == tag);
+        Note note = mNoteManager.getNoteById(id);
+        note.setTitle(changedTitle);
+        note.setContent(changedContent);
+        note.setTag(changedTag);
+        mNoteManager.updateNote(note, true);
+        assertEquals(mNoteManager.getNoteById(id).getTitle(), changedTitle);
+        assertEquals(mNoteManager.getNoteById(id).getContent(), changedContent);
+        assertEquals(mNoteManager.getNoteById(id).getTag(), changedTag);
     }
 
     @Test
     public void getNextIDTest() {
-        String title = "Test1";
-        String content = "Hallo, ich bin ein Testnote!";
-        String tag = "";
-
-        NoteManager noteManager = NoteManager.getInstance();
-        int result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
-
-        Integer nextId = noteManager.getNextFreeId();
+        Integer nextId = mNoteManager.getNextFreeId();
         assert(nextId == 2);
 
-        result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
-        Integer testId = noteManager.getNextFreeId();
+        createData();
+        Integer testId = mNoteManager.getNextFreeId();
         assert(testId == 3);
-        result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
 
-        nextId = noteManager.getNextFreeId();
+        createData();
+        nextId = mNoteManager.getNextFreeId();
         assert(nextId == 4);
 
-        noteManager.deleteNote(noteManager.getNoteById(2));
-        nextId = noteManager.getNextFreeId();
+        mNoteManager.deleteNote(mNoteManager.getNoteById(2));
+        nextId = mNoteManager.getNextFreeId();
         assert(nextId == 2);
 
-        result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
-        nextId = noteManager.getNextFreeId();
+        createData();
+        nextId = mNoteManager.getNextFreeId();
         assert(nextId == 4);
-        result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
-        nextId = noteManager.getNextFreeId();
+
+        createData();
+        nextId = mNoteManager.getNextFreeId();
         assert(nextId == 5);
 
-        noteManager.deleteNote(noteManager.getNoteById(1));
-        nextId = noteManager.getNextFreeId();
+        mNoteManager.deleteNote(mNoteManager.getNoteById(1));
+        nextId = mNoteManager.getNextFreeId();
         assert(nextId == 1);
     }
 
     @Test
     public void addTagTest() {
-        Integer id = 1;
+        Integer id = 2;
         String title = "Test1";
         String content = "Hallo, ich bin ein Testnote!";
         String tag = "sport";
@@ -192,46 +183,24 @@ public class NoteManagerUnitTest {
     public void removeTagTest() {
         // arrange
         Integer id = 1;
-        String title = "Test1";
-        String content = "Hallo, ich bin ein Testnote!";
-        String tag = "sport";
-
-        NoteManager noteManager = NoteManager.getInstance();
-        int result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
+        mNoteManager.getNoteById(id).setTag("sport");
 
         // act
-        noteManager.deleteTagOfNote(id);
-        try {
-            Thread.sleep(1000);
-        } catch(InterruptedException e) {}
+        mNoteManager.deleteTagOfNote(id);
 
         // assert
-        assertEquals("", noteManager.getNoteById(id).getTag());
+        assertEquals("", mNoteManager.getNoteById(id).getTag());
     }
 
     @Test
     public void emptyNotesTest() {
-        String title = "Note1";
-        String content = "my first note";
-        String tag = "";
+        createData();
 
-        NoteManager noteManager = NoteManager.getInstance();
-        int result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
+        assert(mNoteManager.getNotes().size() == 2);
 
-        title = "Note2";
-        content = "my second note";
-        tag = "taggy-tag";
+        mNoteManager.emptyNotes();
 
-        result = noteManager.addNote(title, content, tag);
-        assertEquals(result, 0);
-
-        assert(noteManager.getNotes().size() == 2);
-
-        noteManager.emptyNotes();
-
-        assert(noteManager.getNotes().size() == 0);
+        assert(mNoteManager.getNotes().size() == 0);
     }
 
 
@@ -239,30 +208,19 @@ public class NoteManagerUnitTest {
 
     @Test
     public void noExportWithNoNotesTest() {
-        NoteManager noteManager = NoteManager.getInstance();
-        assertEquals(noteManager.getNotes().size(), 0);
+        mNoteManager.emptyNotes();
 
-        int result = noteManager.exportNotes(mockContext);
+        int result = mNoteManager.exportNotes(mockContext);
         assertEquals(result, -1);
     }
 
     @Test
     public void exportDataTest() {
-        NoteManager noteManager = NoteManager.getInstance();
-        int result = 0;
-
-        // Create data
-        result = noteManager.addNote("note1", "first note", "");
-        assert(result == 0);
-        result = noteManager.addNote("note2", "second note", "taggy-tag");
-        assert(result == 0);
-        result = noteManager.addNote("note3", "third note", "");
-        assert(result == 0);
-        result = noteManager.addNote("note4", "fourth note", "tag");
-        assert(result == 0);
+        mNoteManager.emptyNotes();
+        createImportExportData();
 
         // export the notes
-        result = noteManager.exportNotes(mockContext);
+        int result = mNoteManager.exportNotes(mockContext);
         assertEquals(result, 0);
         File[] files = mockContext.getFilesDir().listFiles();
         assert (files.length == 1);
@@ -297,7 +255,7 @@ public class NoteManagerUnitTest {
 
         //fourth note
         assert(fileContent.get(4).contains("note4"));
-        assert(fileContent.get(4).contains("fourth note"));
+        assert(fileContent.get(4).contains("fourth note, semicolon detected"));
         assert(fileContent.get(2).contains("tag"));
         assert(fileContent.get(4).contains("False"));
         assert(!fileContent.get(4).contains("taggy-tag"));
@@ -305,39 +263,26 @@ public class NoteManagerUnitTest {
 
     @Test
     public void importDataTest() {
-        NoteManager noteManager = NoteManager.getInstance();
-        int result = 0;
-        noteManager.emptyNotes();
+        mNoteManager.emptyNotes();
+        createImportExportData();
 
-        // Create data
-        result = noteManager.addNote("note1", "first note", "");
-        assert(result == 0);
-        result = noteManager.addNote("note2", "second note", "taggy-tag");
-        assert(result == 0);
-        result = noteManager.addNote("note3", "third note", "");
-        assert(result == 0);
-        result = noteManager.addNote("note4", "fourth note, semicolon detected", "tag");
-        assert(result == 0);
-
-        List<Note> copiedNotes = noteManager.getNotes();
-        noteManager.exportNotes(mockContext);
+        List<Note> copiedNotes = mNoteManager.getNotes();
+        mNoteManager.exportNotes(mockContext);
 
         // now delete all notes to import them again
-        noteManager.emptyNotes();
+        mNoteManager.emptyNotes();
 
-        assert(noteManager.getNotes().size() == 0);
+        assert(mNoteManager.getNotes().size() == 0);
 
         //import them again
         File[] files = mockContext.getFilesDir().listFiles();
-        assert (files.length == 1);
+        assertEquals(files.length, 1);
         File file = files[0];
 
-        noteManager.importNotes(file);
+        mNoteManager.importNotes(file);
 
-        assert(noteManager.getNotes().size() == copiedNotes.size());
-        assertEquals(noteManager.getNotes(), copiedNotes);
-
-        assert(true);
+        assertEquals(mNoteManager.getNotes().size(), copiedNotes.size());
+        assertEquals(mNoteManager.getNotes(), copiedNotes);
     }
 
 }

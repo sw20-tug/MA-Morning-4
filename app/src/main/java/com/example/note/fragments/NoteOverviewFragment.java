@@ -181,26 +181,9 @@ public class NoteOverviewFragment extends Fragment {
             new AlertDialog.Builder(this.getContext())
                     .setIcon(android.R.drawable.btn_radio)
                     .setTitle(R.string.change_language)
-                    //.setMessage(R.string.delete_all_tags_confirmation)
                     .setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            /*SharedPreferences sharedPreferences = getContext().getSharedPreferences("language", MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            switch (which) {
-                                case 0:
-                                    editor.putString("language", "en");
-                                    editor.commit();
-                                    break;
-                                case 1:
-                                    editor.putString("language", "de");
-                                    editor.commit();
-                                    break;
-                                case 2:
-                                    editor.putString("language", "fra");
-                                    editor.commit();
-                                    break;
-                            }*/
                         }
                     })
                     .setNegativeButton(R.string.No, null)
