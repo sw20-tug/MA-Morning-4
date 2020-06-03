@@ -98,7 +98,7 @@ public class NoteSendMailTest {
                 .check(matches(isDisplayed()))
                 .perform(click());
 
-        onView(withText("Send via e-mail"))
+        onView(withText(R.string.send_via_email))
                 .inRoot(isDialog())
                 .check(matches(isDisplayed()))
                 .perform(click());
