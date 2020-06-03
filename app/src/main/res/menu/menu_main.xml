@@ -21,7 +21,4 @@
     <item
         android:id="@+id/action_language_settings"
         android:title="@string/action_language_settings" />
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings" />
 </menu>
